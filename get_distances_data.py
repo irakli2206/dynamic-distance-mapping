@@ -2033,21 +2033,20 @@ mapping = {
       "Swiss_German": "Switzerland",  # No exact match, used a plausible geographic region
     "German_Baden-Wurttemberg": "Baden-Wuerttemberg",
     "German_Bavaria": "Bayern",
-    "German_Bavaria_Lower_Bavaria": "Bayern",
-    "German_Bavaria_Lower_Franconia": "Bayern",
-    "German_Bavaria_Middle_Franconia": "Bayern",
-    "German_Bavaria_Middle_Franconia_Erlangen": "Bayern",
-    "German_Bavaria_Swabia": "Bayern",
-    "German_Bavaria_Upper_Palatinate": "Bayern",
+    # "German_Bavaria_Lower_Bavaria": "Bayern",
+    # "German_Bavaria_Lower_Franconia": "Bayern",
+    # "German_Bavaria_Middle_Franconia": "Bayern",
+    # "German_Bavaria_Middle_Franconia_Erlangen": "Bayern",
+    # "German_Bavaria_Swabia": "Bayern",
+    # "German_Bavaria_Upper_Palatinate": "Bayern",
     "German_Brandenburg": "Brandenburg",
-    "German_East": "Sachsen-Anhalt",  # No exact match, used a plausible region
     # "German_East_Prussia_Braunsberg": "Schleswig-Holstein",  # No exact match, used a plausible region
     # "German_East_Prussia_Masuria": "Schleswig-Holstein",  # No exact match, used a plausible region
     # "German_East_Prussia_Memelland": "Schleswig-Holstein",  # No exact match, used a plausible region
     "German_Hamburg": "Hamburg",
     "German_Hesse": "Hessen",
     "German_Lower_Saxony": "Niedersachsen",
-    "German_Lower_Silesia": "Sachsen-Anhalt",  # No exact match, used a plausible region
+    # "German_Lower_Silesia": "Sachsen-Anhalt",  # No exact match, used a plausible region
     "German_Mecklenburg": "Mecklenburg-Vorpommern",
     "German_Mennonite_Russia": "Berlin",  # No exact match, used a plausible region
     "German_North_Bohemia": "Sachsen",  # No exact match, Bohemia related to Sachsen
@@ -2066,7 +2065,7 @@ mapping = {
     # "German_Schleswig-German_South": "Schleswig-Holstein",  # No exact match, used a plausible region
     "German_Southwest": "Baden-Wuerttemberg",  # No exact match, used a plausible region
     "German_Thuringia": "Thueringen",
-    "German_Upper_Silesia": "Sachsen-Anhalt",  # No exact match, used a plausible region
+    # "German_Upper_Silesia": "Sachsen-Anhalt",  # No exact match, used a plausible region
     "German_Upper_Swabia": "Baden-Wuerttemberg",  # Part of Baden-Württemberg
     "German_West_Bohemia": "Sachsen",  # No exact match, Bohemia related to Sachsen
     "German_West_Pomerania_Voivodeship": "Mecklenburg-Vorpommern",  # Related to Pomerania
@@ -2317,7 +2316,19 @@ mapping = {
     "Karachay": "Karatchayevo-cherkesiya Rep.",
     "Khakass": "Khakasiya Rep.",
     "Sicilian_Central": "Sicilia",
-    "Algerian": "Alger",
+    "Algerian": "Boumerdes",
+    "Algerian_Algiers": "Alger",
+    "Algerian_Algiers_Intermediate_Profile": "Adrar",
+    "Algerian_Jew": "Tamanrasset",
+    "Algerian_Steppe_Nomad": "Mascara",
+    "Berber_Algeria_Gourara_Timimoun": "Ghardaia",
+    "Berber_Algeria_Gourara_Timimoun_Intermediate_Profile": "Illizi",
+    "Berber_Algeria_Gourara_Timimoun_SSA_Profile": "Bouira",
+    "Berber_Algeria_Kabyle": "Ouargla",
+    "Berber_Algeria_Mozabite": "Oum El Bouaghi",
+    "Berber_Algeria_Mozabite_Intermediate_Profile": "Tindouf",
+    "Berber_Algeria_Shawiya": "Mila",
+    "Berber_Algeria_Tuareg": "Skikda",
     "Georgian_Adjarian": "Adjara Aut. Rep.",
     "Georgian_Gurian": "Guria",
     "Georgian_Imeretian": "Imereti",
@@ -2372,8 +2383,8 @@ mapping = {
     "Greek_Heptanese_Kefalonia": "Ionioi Nisoi",
     "Greek_Heptanese_Kythira": "Ionioi Nisoi",
     "Greek_Heptanese_Zakynthos": "Ionioi Nisoi",
-    "Greek_Italy_Apulia": "Dytiki Makedonia",
-    "Greek_Italy_Calabria": "Dytiki Makedonia",
+    # "Greek_Italy_Apulia": "Dytiki Makedonia",
+    # "Greek_Italy_Calabria": "Dytiki Makedonia",
     "Greek_Macedonia": "Kentriki Makedonia",
     "Greek_North_Aegean_Lemnos": "Notio Aigaio",
     "Greek_North_Aegean_Samothrace": "Notio Aigaio",
@@ -2399,7 +2410,7 @@ mapping = {
     "Greek_Thessaly": "Thessalia",
     "Greek_Western_Greece_AetoliaAcarnania": "Dytiki Ellada",
     "Greek_Western_Macedonia": "Dytiki Makedonia",
-    "Greek_Western_Macedonia_Vallahas_(Patriyot)": "Dytiki Makedonia",
+    # "Greek_Western_Macedonia_Vallahas_(Patriyot)": "Dytiki Makedonia",
        "Turkish_(Azeri_Profile)": "Igdir",
     "Turkish_(Central_Anatolian_Turk_Profile)": "Kirsehir",
     "Turkish_(East_Anatolian_Turk_Profile)": "Erzurum",
@@ -2456,7 +2467,22 @@ mapping = {
     "Turkish_Trabzon": "Trabzon",
     "Turkish_Usak": "Usak",
     "Turkish_Zonguldak": "Zonguldak",
-    "Tunisian": "Tunis"
+    "Tunisian": "Tunis",
+       "Moroccan": "Tanger - Tétouan",
+    "Moroccan_Casablanca": "Grand Casablanca",
+    "Moroccan_Errachidia": "Laâyoune - Boujdour - Sakia El Hamra",
+    "Moroccan_Errachidia_Intermediate_Profile": "Guelmim - Es-Semara",
+    "Moroccan_Fassi": "Rabat - Salé - Zemmour - Zaer",
+    "Moroccan_Intermediate_Profile": "Marrakech - Tensift - Al Haouz",
+    "Moroccan_Jebala": "Fès - Boulemane",
+    "Moroccan_Jebala_Chefchaouen": "Gharb - Chrarda - Béni Hssen",
+    "Moroccan_Jew": "Souss - Massa - Draâ",
+    "Moroccan_Morisco": "Tadla - Azilal",
+    "Moroccan_Morisco_Tetouan": "Meknès - Tafilalet",
+    "Moroccan_Ouarzazate": "Oriental",
+    "Moroccan_Ouarzazate_Intermediate_Profile": "Chaouia - Ouardigha",
+    "Moroccan_Oujda": "Doukkala - Abda",
+    "Moroccan_Zagora": "Taza - Al Hoceima - Taounate"
 }
 
 # Iterate through the original array

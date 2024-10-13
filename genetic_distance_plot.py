@@ -20,13 +20,13 @@ genetic_data = {
 world['genetic_distance'] = world['name1'].map(dict(zip(genetic_data['Region'], genetic_data['Distance'])))
 
 # Print the first few entries of genetic_distance
-print('All entries of names:\n', world['name0'].unique().tolist())
+# print('All entries of names:\n', world['name0'].unique().tolist())
 
 # Filter for a specific country (e.g., Tunisia)
-country = 'Austria'
+country = 'Russian Federation'
 regions = world[world['name0'] == country]
 region_names = regions['name1'].unique().tolist()
-print(f'All entries of names for {country}:\n', region_names)
+# print(f'All entries of names for {country}:\n', region_names)
 
 # Check how many regions have NaN distances
 nan_count = world['genetic_distance'].isna().sum()
@@ -63,7 +63,7 @@ world_filtered = world[pd.notna(world['genetic_distance'])].copy()
 cmap = LinearSegmentedColormap.from_list('custom_green_red', [(0.0, 1.0, 0.0), 'red'])
 
 # Update normalization for color mapping
-norm = plt.Normalize(vmin=min(distances), vmax=0.12)
+norm = plt.Normalize(vmin=min(distances), vmax=0.3)
 
 # Set color based on genetic distance using .loc to avoid the warning
 world_filtered.loc[:, 'color'] = world_filtered['genetic_distance'].apply(
@@ -92,11 +92,11 @@ ax.set_ylim(ylim)
 # Add a color bar to represent the genetic distances
 sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
 sm.set_array([])
-cbar = plt.colorbar(sm, ax=ax)
+cbar = plt.colorbar(sm, ax=ax, orientation='vertical', shrink=0.5)
 cbar.set_label('Genetic Distance')
 
 # Add titles and labels
-target_name = "Dutch"
+target_name = "Georgia_Kotias_CHG"
 plt.title(f"Genetic Distances to {target_name}")
 plt.xlabel('Longitude')
 plt.ylabel('Latitude')

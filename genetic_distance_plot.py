@@ -21,8 +21,9 @@ world['genetic_distance'] = world['name1'].map(dict(zip(genetic_data['Region'], 
 
 # Print the first few entries of genetic_distance
 print('All entries of names:\n', world['name0'].unique().tolist())
+
 # Filter for a specific country (e.g., Tunisia)
-country = 'Algeria'
+country = 'Austria'
 regions = world[world['name0'] == country]
 region_names = regions['name1'].unique().tolist()
 print(f'All entries of names for {country}:\n', region_names)
@@ -69,6 +70,11 @@ world_filtered.loc[:, 'color'] = world_filtered['genetic_distance'].apply(
     lambda x: cmap(norm(x))
 )
 
+# Find the region with the lowest genetic distance
+closest_population_index = world_filtered['genetic_distance'].idxmin()
+closest_population_name = world_filtered.loc[closest_population_index, 'name1']
+closest_population_distance = world_filtered.loc[closest_population_index, 'genetic_distance']
+
 # Define the boundaries for Europe
 xlim = (-30, 50)  # Longitude limits for Europe
 ylim = (35, 70)   # Latitude limits for Europe
@@ -90,9 +96,13 @@ cbar = plt.colorbar(sm, ax=ax)
 cbar.set_label('Genetic Distance')
 
 # Add titles and labels
-plt.title('Genetic Distance Mapping (Europe Only)')
+target_name = "Dutch"
+plt.title(f"Genetic Distances to {target_name}")
 plt.xlabel('Longitude')
 plt.ylabel('Latitude')
+
+# Add the closest population to the legend
+plt.legend([f'Closest Population: {closest_population_name}, Distance: {closest_population_distance:.4f}'], loc='upper left')
 
 # Use tight_layout for better fit
 plt.tight_layout()

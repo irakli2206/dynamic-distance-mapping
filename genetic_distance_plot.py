@@ -1,17 +1,16 @@
 import geopandas as gpd
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.interpolate import griddata
 import pandas as pd
 from get_distances_data import valid_names
 from get_distances_data import distances
 from matplotlib.colors import LinearSegmentedColormap
 
 # Read the shapefile
-world = gpd.read_file('ne_10m_admin_1_states_provinces.shp')
+world = gpd.read_file('gaul1_asap.shp')
 
 # Handle encoding issues for region names
-world['name'] = world['name'].apply(lambda x: x.encode('latin1').decode('utf-8') if isinstance(x, str) else x)
+# (Assuming 'name1' is the column that contains the region names in your shapefile)
 
 # Example genetic distance data (replace with the correct names if needed)
 genetic_data = {
@@ -20,80 +19,63 @@ genetic_data = {
 }
 
 # Add a column for genetic distances
-world['genetic_distance'] = world['name'].map(dict(zip(genetic_data['Region'], genetic_data['Distance'])))
+world['genetic_distance'] = world['name1'].map(dict(zip(genetic_data['Region'], genetic_data['Distance'])))
 
 # Print the first few entries of genetic_distance
-print('All entries of names:\n', world['name'].unique().tolist())
+# print('All entries of names:\n', world['name1'].unique().tolist())
+# Filter for Poland
+country = 'France'
+regions = world[world['name0'] == country]
+region_names = regions['name1'].unique().tolist()
+print('All entries of names for' + country + '\n', region_names)
 
 # Check how many regions have NaN distances
 nan_count = world['genetic_distance'].isna().sum()
 print(f"Regions with NaN genetic distances: {nan_count}")
 
-# Interpolating genetic distances based on neighbors
-points = np.array(world.geometry.apply(lambda geom: geom.representative_point().coords[0]).tolist())
-values = world['genetic_distance'].values
+# Filter out rows where genetic_distance is NaN
+world_filtered = world[pd.notna(world['genetic_distance'])].copy()
 
-# Use all points for interpolation, including those with NaN values
-valid_points = points[~np.isnan(values)]
-valid_values = values[~np.isnan(values)]
+# Create a custom colormap from green to red
+cmap = LinearSegmentedColormap.from_list('custom_green_red', [(0.0, 1.0, 0.0), 'red'])
 
-# Check valid points and values
-print("Valid Points Shape:", valid_points.shape)
-print("Valid Values Shape:", valid_values.shape)
+# Update normalization for color mapping
+norm = plt.Normalize(vmin=min(distances), vmax=0.2)
 
-# If there are valid points, proceed with interpolation
-if valid_points.shape[0] > 0:
-    grid_x, grid_y = np.mgrid[-180:180:100j, -90:90:100j]
-    grid_z = griddata(valid_points, valid_values, (grid_x, grid_y), method='linear')
+# Set color based on genetic distance using .loc to avoid the warning
+world_filtered.loc[:, 'color'] = world_filtered['genetic_distance'].apply(
+    lambda x: cmap(norm(x))
+)
 
-    # Update world DataFrame with interpolated values
-    world['interpolated_distance'] = griddata(valid_points, valid_values, points, method='linear')
+# Define the boundaries for Europe
+xlim = (-30, 50)  # Longitude limits for Europe
+ylim = (35, 70)   # Latitude limits for Europe
 
-    # Filter out rows where interpolated_distance is NaN
-    world_filtered = world[pd.notna(world['interpolated_distance'])].copy()
+# Create and configure the figure
+fig, ax = plt.subplots(1, 1, figsize=(15, 10))
+world.boundary.plot(ax=ax, linewidth=0.5, color='k')
 
-    # Create a custom colormap from green to red
-    cmap = LinearSegmentedColormap.from_list('custom_green_red', [(0.0, 1.0, 0.0), 'red'])  # Using bright green
+# Plot only regions with valid genetic distances
+world_filtered.plot(ax=ax, color=world_filtered['color'], legend=False)
 
-    # Update normalization for color mapping
-    norm = plt.Normalize(vmin=min(distances), vmax=max(distances))
+ax.set_xlim(xlim)
+ax.set_ylim(ylim)
 
-    # Set color based on interpolated distance using .loc to avoid the warning
-    world_filtered.loc[:, 'color'] = world_filtered['interpolated_distance'].apply(
-        lambda x: cmap(norm(x))
-    )
+# Add a color bar to represent the genetic distances
+sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
+sm.set_array([])
+cbar = plt.colorbar(sm, ax=ax)
+cbar.set_label('Genetic Distance')
 
-    # Define the boundaries for Europe
-    xlim = (-30, 50)  # Longitude limits for Europe
-    ylim = (35, 70)   # Latitude limits for Europe
+# Add titles and labels
+plt.title('Genetic Distance Mapping (Europe Only)')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
 
-    # Create and configure the figure
-    fig, ax = plt.subplots(1, 1, figsize=(15, 10))
-    world.boundary.plot(ax=ax, linewidth=0.5, color='k')
+# Use tight_layout for better fit
+plt.tight_layout()
 
-    # Plot only regions with valid data
-    world_filtered.plot(ax=ax, color=world_filtered['color'], legend=False)
+# Save the figure with improved quality
+plt.savefig('genetic_distance_map.png', dpi=300, bbox_inches='tight')  # Save as PNG with high DPI
 
-    ax.set_xlim(xlim)
-    ax.set_ylim(ylim)
-
-    # Add a color bar to represent the genetic distances
-    sm = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
-    sm.set_array([])
-    cbar = plt.colorbar(sm, ax=ax)
-    cbar.set_label('Genetic Distance')
-
-    # Add titles and labels
-    plt.title('Genetic Distance Mapping (Europe Only)')
-    plt.xlabel('Longitude')
-    plt.ylabel('Latitude')
-
-    # Use tight_layout for better fit
-    plt.tight_layout()
-
-    # Save the figure with improved quality
-    plt.savefig('genetic_distance_map.png', dpi=300, bbox_inches='tight')  # Save as PNG with high DPI
-
-    plt.show()
-else:
-    print("No valid points available for interpolation.")
+plt.show()

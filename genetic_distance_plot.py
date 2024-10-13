@@ -22,9 +22,9 @@ genetic_data = {
 world['genetic_distance'] = world['name1'].map(dict(zip(genetic_data['Region'], genetic_data['Distance'])))
 
 # Print the first few entries of genetic_distance
-# print('All entries of names:\n', world['name1'].unique().tolist())
+print('All entries of names:\n', world['name0'].unique().tolist())
 # Filter for Poland
-country = 'Republic of North Macedonia'
+country = 'Tunisia'
 regions = world[world['name0'] == country]
 region_names = regions['name1'].unique().tolist()
 print('All entries of names for' + country + '\n', region_names)

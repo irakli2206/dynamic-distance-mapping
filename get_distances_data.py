@@ -1,0 +1,2249 @@
+def replace_invalid_names(invalid_names, mapping):
+    valid_names = []
+    for name in invalid_names:
+        # Get the valid name from the mapping, default to the original invalid name if not found.
+        valid_name = mapping.get(name, name)
+        valid_names.append(valid_name)
+    return valid_names
+
+data = """0.02362933	German_Bavaria_Swabia
+0.02428128	US_New-York-City
+0.02485730	German_Baden-Wurttemberg
+0.02674476	French_Alsace
+0.02691351	German_Bavaria_Lower_Bavaria
+0.02797125	Swiss_German
+0.02829722	Austrian
+0.02854922	German_Bavaria_Lower_Franconia
+0.02876902	Montenegrin
+0.02898742	US_New-York
+0.02947088	Serbian
+0.02954412	German_Hesse
+0.02968536	US_Philadelphia
+0.02978546	German_Upper_Swabia
+0.03000632	French_Nord
+0.03016477	German_Saarland
+0.03048800	German_Bavaria
+0.03153259	German_North_Rhine
+0.03181551	Italian_Northeast
+0.03200297	German_Bavaria_Middle_Franconia_Erlangen
+0.03201657	Romanian
+0.03256704	German_Bavaria_Upper_Palatinate
+0.03260689	German_Rhineland-Palatinate
+0.03291383	Pennsylvania_Dutch
+0.03292621	BelgianB
+0.03314288	Croatian
+0.03324553	Moldovan
+0.03335104	French_Auvergne
+0.03346566	BelgianC
+0.03366074	French_Seine-Maritime
+0.03371698	US_Cajun
+0.03389379	French-Canadian
+0.03389656	Bosnian
+0.03413449	Swiss_French
+0.03421735	US_Louisiana
+0.03426312	Slovenian
+0.03459019	Canada_Quebec
+0.03466299	French_Occitanie
+0.03539975	French_Provence
+0.03552410	Hungarian
+0.03553676	US_Chicago
+0.03571710	German_Bavaria_Middle_Franconia_Erlangen_o2
+0.03572157	BelgianA
+0.03603082	US_New-Jersey
+0.03613068	German_North_Moravia
+0.03651632	US_California
+0.03667644	Afrikaner
+0.03669108	US_Northeast
+0.03689422	French_Paris
+0.03774139	French_Pas-de-Calais
+0.03820443	Bulgarian
+0.03824623	Italian_Aosta_Valley
+0.03828295	US_Connecticut
+0.03842748	Macedonian
+0.03884188	German_North_Rhine-Westphalia
+0.03896447	Polish_Malopolska
+0.03906304	Polish_Upper_Silesia
+0.03910315	Pomak_Rhodope_Mountains
+0.03920220	Polish_Mazovia
+0.03934256	Italian_Trentino_Alto_Adige
+0.03981426	US_Ohio
+0.03982152	Canada_New-Brunswick
+0.03988566	US_Michigan
+0.03998533	German_Saxony
+0.04023053	Afrikaner
+0.04023214	US_Massachussets
+0.04090765	US_Pennsylvania
+0.04112291	Italian_Friuli_Venezia_Giulia_Sappada
+0.04131654	US_New-England
+0.04148472	Italian_Veneto
+0.04152683	Polish_Podlaskie
+0.04178641	US_West
+0.04188380	Spanish_Mallorca
+0.04189021	German_Bavaria_Middle_Franconia
+0.04194111	US_Illinois
+0.04195123	German_Thuringia
+0.04290527	Spanish_Penedes
+0.04320358	US_Kansas
+0.04325866	Turkish_West_Macedonia
+0.04332278	Spanish_Camp_de_Tarragona
+0.04335037	US_Florida
+0.04342711	German_Saxony_Leipzig
+0.04346695	US_Midwest
+0.04364721	Spanish_Barcelones
+0.04371774	Pomak_Danubian_Plain
+0.04384347	US_West-Virginia
+0.04386637	US_Missouri
+0.04389990	US_South-Carolina
+0.04392786	US_North-Carolina
+0.04394369	US_Virginia
+0.04394999	German_Lower_Silesia
+0.04411756	US_Texas
+0.04419043	German_Saxony-Anhalt
+0.04440038	US_Maine
+0.04458155	US_South
+0.04465707	Spanish_Girona
+0.04484685	US_Tennessee
+0.04510489	Spanish_Catalunya_Central
+0.04514901	US_Indiana
+0.04521329	US_Nebraska
+0.04561285	US_Kentucky
+0.04565587	Gagauz
+0.04580055	German_Hamburg
+0.04585526	French_Brittany
+0.04617521	US_Maryland
+0.04620255	Spanish_Peri-Barcelona
+0.04648443	Canada_Nova-Scotia
+0.04669248	Spanish_Baleares
+0.04692462	Canada_Ontario
+0.04694857	US_Georgia
+0.04703943	Polish_Subcarpathia
+0.04710645	US_Alabama
+0.04717793	Spanish_Lleida
+0.04720915	Czech
+0.04727837	US_Mississippi
+0.04738240	Australia_Victoria
+0.04742152	US_Iowa
+0.04765176	Australia_Tasmania
+0.04770651	Spanish_Menorca
+0.04778344	German_Mennonite_Russia
+0.04778928	Canada_Newfoundland
+0.04783871	Dutch
+0.04800522	Spanish_Terres_de_l'Ebre
+0.04808160	Spanish_Eivissa
+0.04832342	US_Oklahoma
+0.04833828	Pomak_Almopia_Plain
+0.04863903	Welsh
+0.04873274	New_Zealand
+0.04881696	Australia_Colonial
+0.04896571	Spanish_Cataluna
+0.04920350	Australia_New-South-Wales
+0.04936509	US_Arkansas
+0.04937989	US_Utah
+0.04960839	Greek_East_Macedonia_and_Thrace
+0.04986127	Ukrainian_Zakarpattia
+0.05012186	German_Westphalia
+0.05014024	Italian_Bergamo
+0.05023470	Spanish_Pirineu
+0.05031105	Italian_Liguria
+0.05033876	Australia_South-Australia
+0.05046832	US_Wisconsin
+0.05054965	Australia_Queensland
+0.05061467	Italian_Piedmont
+0.05062066	Canada_West
+0.05065182	Pomak_Tikves_Plain
+0.05072409	English_Cornwall
+0.05080059	English
+0.05092384	Spanish_Valencia
+0.05159105	Swiss_Italian
+0.05179307	Spanish_Castello
+0.05189676	Spanish_Alacant
+0.05208331	Spanish_Galicia
+0.05240762	Spanish_Cantabria
+0.05259902	German_Brandenburg
+0.05289454	Spanish_Castilla_La_Mancha
+0.05332468	Torbeši_Polog
+0.05346591	Orcadian
+0.05395993	Scottish
+0.05409854	Spanish_Castilla_Y_Leon
+0.05409900	Spanish_Biscay
+0.05414937	German_Western_Pomerania
+0.05419945	Spanish_Murcia
+0.05424999	US_Minnesota
+0.05432591	German_Schleswig-Holstein
+0.05435430	Turkish_North_Macedonia
+0.05445852	Polish_Silesia
+0.05454466	French_South
+0.05460491	Spanish_Aragon
+0.05483750	Spanish_Andalucia
+0.05503101	German_Lower_Saxony
+0.05503567	Spanish_Aragon_North
+0.05511778	Spanish_Extremadura
+0.05521743	Italian_Lombardy
+0.05521965	Spanish_La_Rioja
+0.05526182	Portuguese
+0.05541011	French_Chalosse
+0.05548111	French_Bigorre
+0.05589770	Slovakian
+0.05596585	Spanish_Burgos
+0.05621250	Danish
+0.05643086	German_West_Pomerania_Voivodeship
+0.05651849	Italian_Emilia
+0.05678359	German_Pomerania
+0.05722906	Ukrainian_Lviv
+0.05787207	German_Mecklenburg
+0.05793912	Polish_South
+0.05801628	Albanian
+0.05802081	Basque_Araba
+0.05811577	Greek_Central_Macedonia
+0.05818969	French_Bearn
+0.05847999	Irish
+0.05849012	Shetlandic
+0.05871033	Spanish_Soria
+0.05887892	Greek_Macedonia
+0.05939637	Rumelia_East
+0.06003390	German_West_Prussia
+0.06055165	Norwegian
+0.06061860	Spanish_Navarra
+0.06062069	Polish_Wielkopolska
+0.06069503	Greek_Thessaly
+0.06081450	Moldovan_o
+0.06112922	German_East_Prussia_Braunsberg
+0.06165788	Italian_Tuscany
+0.06198981	Spanish_Pais_Vasco
+0.06244394	Spanish_Asturias
+0.06257882	Basque_Navarre_Center
+0.06258080	German_Schleswig-Holstein_o
+0.06311449	Basque_Roncal
+0.06334049	Icelandic
+0.06346449	Swedish
+0.06348215	Basque_French
+0.06360804	German_Brandenburg_o
+0.06424218	Basque_Gipuzkoa
+0.06454646	Basque_Biscay
+0.06485144	Greek_West_Taygetos
+0.06498212	Basque_Gipuzkoa_Southwest
+0.06509172	Turkish_Thessaly
+0.06547980	Basque_Lower_Navarre
+0.06552252	French_Corsica
+0.06597499	Basque_Spanish
+0.06681431	Sorb_Niederlausitz
+0.06762936	Turkish_Deliorman
+0.06770912	Greek_Messenia
+0.06795251	Basque_Soule
+0.06813573	Basque_Navarre_North
+0.06834501	Patriyot_West_Macedonia
+0.06846009	Greek_Achaea
+0.06894862	Basque_Baztan
+0.06914173	Greek_Arcadia
+0.06949717	German_Bavaria_Middle_Franconia_Erlangen_o1
+0.06982643	Greek_Elis
+0.07031069	Turkish_Chitak
+0.07054213	Greek_Argolis
+0.07092222	German_Upper_Silesia
+0.07114636	Italian_Marche
+0.07143605	Greek_Corinthia
+0.07146950	Greek_Peloponnese
+0.07174285	Polish_Warmia-Masuria
+0.07242522	Italian_Umbria
+0.07254265	Ukrainian_Rivne
+0.07277945	Ukrainian_Sumy
+0.07317146	Greek_East_Taygetos
+0.07318974	Ukrainian_Zhytomyr
+0.07372983	Russian_Belgorod
+0.07467462	Cossack_Ukrainian
+0.07502216	Greek_Laconia
+0.07511732	Ukrainian_Dnipro
+0.07582971	German_East_Prussia_Masuria
+0.07583786	Spanish_Canarias
+0.07617665	Ukrainian_Chernihiv
+0.07645150	Russian_Voronez
+0.07709110	Italian_Lazio
+0.07748246	Russian_Orel
+0.07759410	Greek_North_Tsakonia
+0.07869105	Polish_Kuyavia
+0.07992564	Russian_Kursk
+0.07995352	Turkish_Rumeli
+0.08017173	Russian_Smolensk
+0.08021010	Greek_Cyclades_Kea
+0.08043976	Russian_Ryazan
+0.08056250	Italian_Molise
+0.08102883	Roma_Barcelona
+0.08173227	German_Hamburg_o
+0.08174272	Italian_Abruzzo
+0.08249103	Ukrainian_Zhytomyr_o
+0.08285348	Greek_Izmir
+0.08356401	Russian_Kaluga
+0.08365434	Greek_South_Tsakonia
+0.08379702	Sicilian_West
+0.08464619	Belarusian
+0.08795156	Italian_Apulia
+0.08821007	Russian_Tver
+0.08909139	Cossack_Kuban
+0.08947017	Greek_Apulia
+0.08966485	German_East_Prussia_Memelland
+0.08977986	Italian_Basilicata
+0.09017345	Turkish_Canakkale_Europe
+0.09055526	Lithuanian_PA
+0.09129154	Belmonte_Jew
+0.09177635	Greek_Cyclades_Milos
+0.09203865	Sicilian_East
+0.09206653	Russian_Pskov
+0.09214945	Moksha
+0.09222757	Ashkenazi_Ukraine
+0.09234628	Ashkenazi_Russia
+0.09240790	Ashkenazi_Belarussia
+0.09265579	Russian_Yaroslavl
+0.09273281	Greek_Crete_Chania
+0.09415753	Italian_Campania
+0.09428772	Lithuanian_VA
+0.09524852	Ashkenazi_Lithuania
+0.09570847	Ashkenazi_Romania
+0.09605902	Ashkenazi_Poland
+0.09621385	Finnish_Southwest
+0.09658389	Maltese
+0.09659988	Greek_Deep_Mani
+0.09685379	Greek_Cyclades_Tinos
+0.09856037	Italian_Calabria
+0.09857071	Mordovian
+0.09873876	Erzya
+0.09878951	Greek_Crete_Heraklion
+0.09917023	Russian_Kostroma
+0.09928005	Turkish_Crete
+0.10005055	Greek_Crete
+0.10083454	Greek_Crete_Lasithi
+0.10174328	Estonian
+0.10228008	Ashkenazi_Austria
+0.10228494	Finnish_Southeast
+0.10228992	Lithuanian_VZ
+0.10231818	Lithuanian_RA
+0.10377427	Ingrian
+0.10458558	Ashkenazi_Latvia
+0.10616543	Ashkenazi_Germany
+0.10623257	Greek_Cyclades_Amorgos
+0.10624736	Finnish_Central
+0.10691407	Roma_Madrid
+0.10784018	Russian_Krasnoborsky
+0.10878562	Lithuanian_SZ
+0.10889923	Ashkenazi_France
+0.10962394	Lithuanian_PZ
+0.11223784	Greek_Kos
+0.11236196	Latvian
+0.11559225	Italian_Jew
+0.11584513	Finnish_North
+0.11649988	Greek_Dodecanese
+0.11660738	Karelian
+0.11683401	Turkish_Lesbos
+0.11809390	Finnish_East
+0.11847098	Turkish_Jew
+0.11918804	Vepsian
+0.12213972	Greek_Dodecanese_Rhodes
+0.12325629	Tatar_Mishar
+0.12439856	Turkish_Dodecanese
+0.12474353	Bulgarian_Jew
+0.12487332	Roma_Bilbao
+0.12579450	Sardinian
+0.12607763	Romaniote_Jew
+0.12669329	Russian_Pinega
+0.12789280	Russian_Pinezhsky
+0.12791593	Algerian_Jew
+0.12793957	Roma_Porto
+0.12822443	Moroccan_Jew
+0.13098871	Turkish_Nevsehir
+0.13121116	Turkish_Balikesir
+0.13203598	Roma_Granada
+0.13298859	Turkish_Konya
+0.13322854	Kumyk
+0.13363770	Kabardin
+0.13384758	Kaitag
+0.13419845	Cypriot
+0.13483203	Greek_Central_Anatolia
+0.13535486	Andian_B
+0.13538880	Turkish_Kayseri
+0.13551315	Turkish_Aydin
+0.13564497	Avar_o
+0.13566104	Tabasaran
+0.13576352	Turkish_Denizli
+0.13623415	Cherkes
+0.13710678	Syrian_Jew
+0.13743538	Tat_Dagestan_Dzhalgan
+0.13775290	Lezgin
+0.13776226	Ratlub
+0.13790941	Karata
+0.13811106	Adygei
+0.13829701	Circassian
+0.13949121	Akhvakh
+0.13965039	Chechen
+0.14023732	Turkish_Sivas
+0.14027850	Balkar
+0.14048003	Turkish_Antalya
+0.14062073	Bagvalin
+0.14078243	Lak
+0.14083274	Ingushian
+0.14105779	Karachay
+0.14130564	Syrian_Aleppo
+0.14138461	Azerbaijani_Dagestan
+0.14140424	Russian_Leshukonsky
+0.14180322	Avar
+0.14205218	Tunisian_Jew
+0.14219852	Abazin
+0.14244702	Georgian_Tush
+0.14250375	Darginian
+0.14260567	Kubachinian
+0.14294109	Bagvalin_o
+0.14304560	Chamalin
+0.14324037	Azerbaijani_Republic_Shaki
+0.14385206	Libyan_Jew
+0.14385536	Tsez_B
+0.14404371	Tat_Azerbaijan
+0.14407840	Tindal
+0.14468314	Armenian_Artsakh
+0.14479610	Tat_Dagestan_Nyugdi
+0.14539504	Azerbaijani_Republic_Gabala
+0.14639842	Udi
+0.14653617	Georgian_Khevs
+0.14676794	Hunzib
+0.14702607	Roma_Balkans
+0.14706835	Andian_A
+0.14710080	Komi_A
+0.14733750	Armenian_Parspatunik
+0.14849013	Azerbaijani_Turkey
+0.14871856	Armenian_Gesaria
+0.14878399	Armenian_Syunik
+0.14894994	Alevi_Dersim
+0.14899498	Kurd_Syria
+0.14969966	Alawite
+0.14996497	Kurd_Kurmanji_Turkey
+0.15029298	Tatar_Kazan
+0.15029573	Turkish_Erzurum
+0.15055451	Lebanese_Muslim
+0.15082426	Ezid
+0.15091177	Druze
+0.15113761	North_Ossetian
+0.15122787	Georgian_NorthEast
+0.15154996	Azerbaijani_Iran_EastAz
+0.15160011	Azerbaijani_Iran_WestAz_Maku
+0.15166295	Bukharian_Jew
+0.15216226	Karaite_Egypt
+0.15227471	Lebanese_Druze
+0.15263700	Azerbaijani_Republic_Agjabedi
+0.15264661	Mountain_Jew_Chechnya
+0.15298175	Kurd_Zaza_Turkey
+0.15310943	Turkish_Giresun
+0.15317268	Ossetian
+0.15319630	Greek_Trabzon
+0.15335457	Syrian_Homs
+0.15359724	Azerbaijani_Iran_Ardabil
+0.15374474	Lebanese_Shia_Muslim_Beirut
+0.15402096	Turkish_Ahiska
+0.15431200	Armenian_Erzurum
+0.15432292	Tajik_Yaghnobi
+0.15472619	Syrian_Hama
+0.15485199	Georgian_Kart
+0.15486766	Syrian
+0.15501618	Georgian_Jew
+0.15502744	Georgian_Meskheti
+0.15513043	Tsez_A
+0.15524196	Armenian_Ararat
+0.15565968	Armenian_Aintab
+0.15573782	Georgian_Mtiuleti
+0.15578731	Kurd_Iraq
+0.15587917	Hinukh
+0.15599002	Kurd_Sorani_Iran_Mukriyan
+0.15623193	Lebanese_Sunni_Muslim_Beirut
+0.15637556	Turkish_Trabzon
+0.15667302	Armenian_Gurin
+0.15713429	Lebanese_Christian
+0.15721791	Mountain_Jew_Dagestan
+0.15726006	Iranian_Zoroastrian
+0.15745404	Kurd_Kurmanji_Turkey_o
+0.15766234	Kurd_USSR
+0.15769574	Georgian_Kakh
+0.15771889	Assyrian_o
+0.15801774	Lebanese_Maronite_Christian_Zgharta
+0.15828749	Iranian_Central
+0.15879579	Talysh_Azerbaijan
+0.15901788	Lebanese_Orthodox_Christian_Koura
+0.15907957	Chaldean_Iraq
+0.15923451	Lebanese_Sunni_Muslim_Dinniyeh
+0.15983359	Iranian_Cosmopolitan_Tehran
+0.15986984	Iranian_Persian_Yazd
+0.16018586	Armenian_Urfa
+0.16025826	Georgian_Samtckhe
+0.16048162	Georgian_Laz
+0.16092668	Assyrian_Mardin
+0.16095661	Iranian_Persian_Fars
+0.16115212	Assyrian
+0.16122955	Abkhasian_Gudauta
+0.16135426	Pamiri_Rushan
+0.16156418	Abkhasian
+0.16176216	Armenian_Hemsheni
+0.16187600	Iraqi_Arab_West
+0.16287475	Iranian_Jew
+0.16296034	Turkmen_o
+0.16298583	Karaite_Iraq
+0.16410865	Georgian_Javakheti
+0.16412448	Iranian_Qashqai
+0.16417426	Mountain_Jew_Azerbaijan
+0.16513963	Palestinian_Beit_Sahour
+0.16552529	Iranian_Lor_Khorramabad
+0.16594561	Irani_Zoroastrian_India
+0.16657388	Iraqi_Arab_Central
+0.16688248	Mandaean_Iraq
+0.16695302	Georgian_Ajar
+0.16723958	Iranian_Persian_Shiraz
+0.16732000	Saami_Kola
+0.16751618	Georgian_Svaneti
+0.16758570	Georgian_Lechkhumi
+0.16765667	Jordanian
+0.16848602	Iranian_Lor_Bakhtiari
+0.16941815	Iraqi_Jew
+0.16954964	Kurdish_Jew
+0.16971189	Georgian_West
+0.16973807	Georgian_Imer
+0.17028047	Pamiri_Shugnan
+0.17111956	Georgian_Megr
+0.17121785	Georgian_Guria
+0.17142005	Nash_Didan_Jew_Urmia
+0.17210860	Iranian_Persian_Khorasan
+0.17255367	Palestinian
+0.17384507	Iranian_Arab_Khuzestan
+0.17432615	Samaritan
+0.17482140	Iranian_Mazandarani_o
+0.17746761	Tatar_Lipka
+0.17866983	Tajik_Tajikistan_Kulob
+0.17884796	Georgian_Ratcha
+0.18022126	Iraqi_Arab_South
+0.18036239	Iranian_Mazandarani
+0.18049562	EmiratiC
+0.18153761	Tajik_Tajikistan_Ayni
+0.18205788	Besermyan
+0.18287294	Tajik_Tajikistan_Hisor
+0.18294700	Pamiri_Badakhshan
+0.18624763	BedouinA
+0.18668310	Parsi_Pakistan
+0.18680994	Pamiri_Ishkashim
+0.18921389	Parsi_India
+0.19054942	Cochin_Jew_A
+0.19117861	Tunisia
+0.19333819	Pashtun_Pakistan_Bettani
+0.19523268	Pashtun_Afghanistan_Paktia
+0.19547375	Pashtun_Afghanistan
+0.19633521	Turkmen_Iran
+0.19708853	Pashtun_Afghanistan_North
+0.19709830	Chuvash
+0.19850499	Pamiri_Wakhi
+0.19866783	Iranian_Bandari
+0.19978812	EmiratiB
+0.20058840	Udmurt
+0.20097348	Balochi_Iran_o
+0.20145264	Pamiri_Sarikoli
+0.20506181	Pashtun_Northeast_Afghanistan
+0.20515350	Egyptian_Copt
+0.20526031	Tajik_Afghanistan
+0.20541557	SaudiA
+0.20732019	EgyptianA
+0.20818877	Pashtun_Pakistan_Khattak_Nowshera
+0.20857923	Tatar_Crimean_steppe
+0.21008719	Yemenite_Amran
+0.21088216	Saami
+0.21109768	Pashtun_Afghanistan_Northeast
+0.21318979	EgyptianB
+0.21457295	SaudiB
+0.21530502	Pashtun_Uthmankhel
+0.21533533	Moroccan_North
+0.21563625	Saudi_Mecca
+0.21642432	Pashtun_Tarkalani
+0.21694566	Balochi_Iran
+0.21780468	Ror
+0.21818452	Saudi_Najd
+0.21937106	Kho
+0.21972751	Turkmen
+0.22089672	Yemenite_Dhamar
+0.22130698	Yemenite_Ibb
+0.22139329	Makrani
+0.22140905	EmiratiA
+0.22190193	Pashtun_Yusufzai
+0.22204142	Tunisian_Berber_Zraoua
+0.22254101	Balochi_Pakistan
+0.22259253	Yemenite_Jew
+0.22292251	Yemenite_Al_Bayda
+0.22421680	Kalash
+0.22510639	Yemenite_Ma'rib
+0.22535792	Yemenite_Hadramaut
+0.22542398	Berber_Tunisia_Sen
+0.22561830	Brahui
+0.22586775	Tunisian_Berber_Tamezret
+0.22621990	Jat_Haryana
+0.22667752	Turkmen_Uzbekistan
+0.22680608	Berber_Tunisia_Chen
+0.22735042	Yemenite_Al_Jawf
+0.22814739	Tunisian
+0.22845174	Saudi_Jizan
+0.22879092	Jat_Uttar_Pradesh
+0.22980623	Libyan
+0.23014178	Saudi
+0.23129522	BedouinB
+0.23156037	Pashtun_Pakistan
+0.23309531	Kamboj
+0.23325708	Tunisian_Berber_Matmata
+0.23459738	Tunisian_Rbaya
+0.23558077	Yemenite_Hajjah
+0.23795392	Yemenite_Mahra
+0.23811848	Sindhi_o
+0.23931075	Algerian
+0.24005105	Jat_Punjab_Muslim
+0.24072708	Egyptian_o
+0.24216893	Jat_Punjab_Sikh
+0.24397082	Sudan_Arab_Rashaayda
+0.24490396	Khanty_o1
+0.24548190	Mumbai_Jew
+0.24619104	Mari
+0.24656696	Khatri
+0.24700507	Arora
+0.24758000	Parsi_India_o
+0.24806176	Arain
+0.24838524	Mozabite
+0.24910121	Gujar_Swat_o
+0.24926411	Punjabi_Sikh_India
+0.25183474	Kohistani
+0.25306959	Awan
+0.25394536	Brahmin_Gujarat_Nagar
+0.25513084	Tunisian_Douz
+0.25596143	Rajput_Punjab
+0.25635741	Shia_Uttar_Pradesh
+0.25718239	Kashmiri_Pandit
+0.25750087	Rajput_Potohar
+0.25821095	Burusho
+0.25883416	Jat_Pahari
+0.25958762	Tarkhan_Sikh/Hindu
+0.25965993	Sindhi
+0.26007895	Moroccan
+0.26009044	Gujar_Punjab
+0.26015072	Gujarati_Bharuch_Muslim
+0.26084901	Kashmiri_India_Muslim
+0.26089086	Gujar_Swat
+0.26123359	Punjabi_Muslim_India
+0.26131048	Punjabi_Hindu_India
+0.26159835	Brahmin_Punjab
+0.26255400	Tarkhan_Muslim
+0.26312126	Kashmiri_Pakistan
+0.26333355	Bashkir
+0.26362440	Gujar_Kashmir
+0.26496586	Brahmin_Rajasthan
+0.26545309	Rajput_Rajasthan
+0.26593846	Rajput_AJK
+0.26669229	Uzbek
+0.26685029	Kashmiri_Muslim
+0.26719862	Pathan_Bhopal
+0.26833564	Kashmiri_Pakistan_o
+0.26842760	Mirpuri_Pakistan
+0.26993941	Brahmin_Uttar_Pradesh_Braj
+0.27035586	Nepali_Indo-Aryan_A
+0.27100280	Khatri_o
+0.27130932	Berber_MAR_ERR
+0.27131269	Brahmin_Jammu_Dogra
+0.27259905	Bahun
+0.27313616	Brahmin_Himachal_Pradesh
+0.27327536	Brahmin_Gujarat_Bardai
+0.27398667	Brahmin_Gujarat
+0.27405239	Tyagi
+0.27454217	Syed_Uttar_Pradesh_West
+0.27468619	Gujar_Rajasthan
+0.27551828	Gujar_Madhya_Pradesh
+0.27592136	Brahmin_Uttar_Pradesh_Awadh
+0.27761229	Bhumihar_Bihar
+0.27938003	Balti_o
+0.28113360	Brahmin_Gujarat_Audichya
+0.28169070	Rajput_Madhya_Pradesh
+0.28381572	Saharawi
+0.28558000	Maori
+0.28836950	Lubana
+0.28946166	Berber_MAR_TIZ
+0.29003670	Brahmin_Uttar_Pradesh_East
+0.29031130	Hazara_o
+0.29345052	Cochin_Jew_B
+0.29593041	Iranian_Bandari_Zanji
+0.29783021	Kshatriya_Uttar_Pradesh_East
+0.29898120	Tatar_Siberian
+0.29924289	Nogai_Dobruja
+0.29936009	Brahmin_Mondal
+0.29996797	Punjabi_Lahore
+0.30163803	Nepali_Indo-Aryan_B
+0.30264461	Balti
+0.30296221	Brahmin_West_Bengal
+0.30654543	Brahmin_Konkani_Catholic
+0.30780672	Yukagir_Forest
+0.30784182	Konkani_Christian_A
+0.30802728	Brahmin_Telugu
+0.30864549	Brahmin_Chitpavan
+0.30875666	Brahmin_Kerala_Nambudiri
+0.30934849	Brahmin_Uttarakhand
+0.30943557	Brahmin_Iyengar
+0.31034736	Brahmin_Karnataka_Tulu
+0.31131581	Poduval_Kerala_North
+0.31178214	Maniyani
+0.31199637	Brahmin_Telugu_Vaidiki
+0.31215241	Tlingit
+0.31223298	Ket_o1
+0.31226359	Knanaya
+0.31232652	Brahmin_Tamil_Nadu
+0.31238558	Brahmin_Telugu_Niyogi
+0.31252361	Brahmin_Tamil_Nadu_Iyer
+0.31294473	Sonar_Marathi
+0.31521712	Nair
+0.31578101	Kshatriya_Uttar_Pradesh_East_o
+0.31583054	Brahmin_Gaud_Sawarswat
+0.31990766	Brahmin_Tamil_Nadu_Iyengar
+0.32042777	Konkani_Catholic
+0.32134765	Baniya_Gujarat
+0.32246945	Nogai
+0.32735898	Brahmin_Gujarat_o
+0.32747026	Bahun_o
+0.32828951	Nepali_Indo-Aryan_C
+0.32861338	Uygur
+0.32923552	Tharu_o1
+0.32991800	Bunt_Tulu
+0.33021016	Kayastha_Bihar
+0.33103696	Nasrani
+0.33159315	Chamar_Uttar_Pradesh_o
+0.33164253	Rajput_Mondal
+0.33256643	Komi_B
+0.33331374	Toda
+0.33371554	Baniya_Punjab
+0.33406938	Gujarati
+0.33412064	Rajput_Garhwal
+0.33491641	Tatar_Siberian_Zabolotniye
+0.33513965	Mappila_Muslim
+0.33654292	Kanjar
+0.33921489	Kol
+0.34111467	Karakalpak
+0.34121116	Moroccan_South
+0.34358616	Dharkar
+0.34386942	Hazara
+0.34393947	Reddy
+0.34405601	Thiyya
+0.34436696	Brahmin_Uttar_Pradesh_East_o
+0.34477170	Kamboj_o
+0.34578688	Bengali_Bangladesh_Sylhet
+0.34636888	Thiyya_Thrissur
+0.34816263	Saliya_Kerala
+0.34897899	Bengali_Bangladesh_SouthEast
+0.35002091	Kamma
+0.35243918	Altaian_Kizhi_o
+0.35271125	Koli_Gujarat
+0.35394163	Velama
+0.35422729	Ezhava
+0.35588807	Uttar_Pradesh_Scheduled_Castes
+0.35597380	Khandayat_Odisha
+0.35828828	Vellalar
+0.35895969	Mansi
+0.35899705	Pillai_Tamil
+0.35969567	Telugu
+0.36125072	Balija
+0.36208944	Bengali_Bangladesh
+0.36262756	Baniya_Uttar_Pradesh_Gupta
+0.36507595	Sri_Lankan
+0.36605182	Konkani_Christian_B
+0.36619575	Yadav_Telugu
+0.36781752	Tamil_Sri_Lanka
+0.36809143	Dusadh
+0.36897814	Satnami_Chhattisgarh
+0.37059084	Greenlander_West
+0.37133596	Maratha
+0.37165116	Punjabi_Christian_India
+0.37260263	Piramalai_Kallar
+0.37450087	Pulaya_Kerala
+0.37494269	Bengali_India
+0.37554998	Tubalar
+0.37620179	Sinhala
+0.37727096	Rohingya
+0.37806672	Tharu_o2
+0.37893693	Chenchu
+0.37988988	Nadar
+0.38015109	Kazakh
+0.38185302	Eritrean
+0.38214616	Relli
+0.38460930	Chamar_Uttar_Pradesh
+0.38484544	Saho_Eritrean
+0.38568909	Khanty
+0.39063389	Shor_Mountain
+0.39088516	Ethiopian_Tigray
+0.39097624	Sakilli
+0.39247114	Damai
+0.39370137	Shor_Khakassia
+0.39519630	Pallan
+0.39540457	North_Kannadi
+0.39554652	Shor
+0.39658252	Ethiopian_Afar
+0.39688075	Nepali_Indo-Aryan_D
+0.39871951	Hakkipikki
+0.39895042	Madiga
+0.39974588	Kazakh_Xinjiang
+0.40089987	Ethiopian_Amhara
+0.40097632	Ethiopian_Agaw
+0.40097926	Kirghiz_Tajikistan_Pamir
+0.40222023	Baggara_Arab_Chad_A
+0.40580318	Paniya_o
+0.40737241	Kurichiya
+0.40844869	Ethiopian_Jew
+0.40926876	Teleut
+0.41008647	Mala
+0.41295303	Nyishi
+0.41313918	Khakass
+0.41823282	Kirghiz
+0.41943655	Kirghiz_China
+0.41969283	Buryat_o
+0.42176828	Vishwakarma_Kerala
+0.42276100	Newar
+0.42374549	Irula
+0.42576360	Pulliyar
+0.42641806	Sudan_Arab_Kababish
+0.42667127	Khanty_o2
+0.43075130	Cree
+0.43287182	Berber_Algeria
+0.43329106	Kurumba
+0.43365122	Kadar
+0.43443939	Brahmin_Manipuri
+0.43713656	Malayan
+0.44099843	Greenlander_East
+0.44190786	Kazakh_China
+0.44307051	Gond
+0.44336653	Ethiopian_Oromo
+0.44623866	Teleut_o
+0.44684777	Nepali_Indo-Aryan_o1
+0.45104773	Khakass_Kachins
+0.45337529	Mawasi_Chhattisgarh
+0.45417199	Asur
+0.45466330	Paniya
+0.45476545	Altaian
+0.45912575	Selkup
+0.46105046	Jarawa
+0.46205741	Onge
+0.46313725	Nihali
+0.46345088	Altaian_Kizhi
+0.46387529	Nenets
+0.46568204	Somali
+0.46571088	Santhal
+0.46608000	Ket
+0.46847698	Bhunjia_Chhattisgarh
+0.46947159	Bhumij
+0.47149640	Korwa
+0.47300840	Ho
+0.47316771	Birhor
+0.47530505	Gadaba
+0.47537451	Ethiopian_Wolayta
+0.47778189	Dhurwa_Odisha
+0.47867863	Tharu
+0.48173934	Khonda_Dora
+0.48192462	Somali_Kenya
+0.48368434	Kusunda
+0.48382938	Mongol_Xinjiang
+0.48630131	Nepali_Indo-Aryan_o2
+0.49001103	Mongolian
+0.49024525	Nenets_Tundra
+0.49151245	Juang
+0.49165177	Nenets_Forest
+0.49168971	Bonda
+0.49434803	Ket_o2
+0.49518010	Kalmyk
+0.49815776	Mogush
+0.49861969	Rendille
+0.50235791	Maniq
+0.50810134	Jehai
+0.51015314	Tuvinian
+0.51325447	Iraqw
+0.51739005	Nepali_Tamang_Simigaon
+0.52168504	Mongol
+0.52252393	Magar
+0.52328724	Dongxiang
+0.52385891	Tamang
+0.52418874	Dolgan
+0.52480720	Aeta
+0.52709691	Agta
+0.52817904	Fulani
+0.53034065	Mongol_Inner_Mongolia
+0.53122631	Salar
+0.53166202	Jamatia
+0.53465985	Yuku
+0.53466628	Buryat
+0.53499525	Evenk_o
+0.53587258	Tripuri
+0.53657582	Dungan
+0.54026138	Riang
+0.54259575	Todzin
+0.54398397	Baoan
+0.54413593	Datog
+0.54454390	Khamnegan
+0.54525968	Burmese
+0.54748403	Batak
+0.54773138	Thai
+0.54920674	Mon
+0.54952653	Garo
+0.54963110	Mongol_IMAR
+0.55364381	Hui
+0.55489835	Gurung
+0.55654499	Tibetan_Gannan
+0.55731526	Bonan
+0.55816537	Baggara_Arab_Sudan
+0.56302077	Elmolo
+0.56384980	Tibetan_Gangcha
+0.56538418	Nyah_Kur
+0.56541391	Tibetan_Xunhua
+0.56561622	Yakut_Sakha
+0.56574803	Nepali_Tamang_Tashinam
+0.56666287	Tu
+0.56743509	Madagascar_Vezo
+0.56849393	Ethiopian_Ari_cultivator
+0.56855449	Fulani_Burkina_Faso_Ziniare
+0.56868590	Malay
+0.56911419	Hui_Guizhou
+0.57061645	Nepali_Sherpa_Rolwaling
+0.57223106	Chad_Daza
+0.57243200	Tibetan_Shannan
+0.57258510	Madagascar_Temoro
+0.57286944	Itelmen
+0.57387288	Rai
+0.57451465	Ethiopian_Ari
+0.57498962	Chipewyan
+0.57552856	Madagascar_Mikea
+0.57673652	Tibetan
+0.57679870	Bajo
+0.57737312	Sherpa
+0.57754749	Cambodian
+0.57806754	Khmer
+0.57819353	Eskimo_Sireniki
+0.57842439	Tibetan_Shigatse
+0.57853085	Chukchi
+0.57856076	Tibetan_Lhasa
+0.57875302	Yugur
+0.57895184	Eskimo_Naukan
+0.57911781	Ethiopian_Ari_blacksmith
+0.58063453	Hmar
+0.58185475	Ogiek
+0.58186335	Koryak
+0.58200408	Mizo
+0.58235888	Eskimo
+0.58285083	Kuki
+0.58293678	Nganasan_o
+0.58330136	Kuy_Suay
+0.58361395	Mongola
+0.58366207	Eskimo_Chaplin
+0.58540341	Kom
+0.58568339	Tibetan_Nagqu
+0.58576577	Indonesian_Bali
+0.58590050	Daur
+0.58636984	Vizayan
+0.58867134	Tibetan_Yajiang
+0.59087876	Tibetan_Chamdo
+0.59142472	Masai
+0.59243359	Karen_Sgaw
+0.59248437	Qiang_Daofu
+0.59278519	Xibo
+0.59284071	Wa
+0.59369043	Lawa
+0.59511688	Amerindian_North
+0.59551339	Blang
+0.59608546	Indonesian_Java
+0.59625979	Tibetan_Yunnan
+0.59660421	Yukagir
+0.59804531	Yukagir_Tundra
+0.59965773	Hezhen
+0.59975479	Lao
+0.59980521	Akha
+0.59994250	Pumi
+0.60011219	Naxi
+0.60073330	Oroqen
+0.60077080	Hawaiian
+0.60102181	Htin_Mal
+0.60178261	Tibetan_Xinlong
+0.60180614	Mlabri
+0.60305743	Hani
+0.60344082	Han_Shanxi
+0.60372710	Bai
+0.60394748	Yi
+0.60416588	Lahu
+0.60523177	Naga
+0.60666172	Baggara_Arab_Chad_B
+0.60705587	Qiang_Danba
+0.60807897	Manchu_Jinzhou
+0.60819569	Kinh_Vietnam
+0.60851292	Sandawe
+0.60875893	Nivkh
+0.60897500	Han_Henan
+0.60915734	Lebbo
+0.61005754	Manchu
+0.61077249	Ulchi
+0.61091760	Japanese
+0.61161868	Tai_Lue
+0.61293057	Nasoi
+0.61299350	Manchu_Liaoning
+0.61305153	Bolivian_Pando
+0.61316087	Han_Shandong
+0.61399819	Han_Shanghai
+0.61476716	Han_Sichuan
+0.61520947	Dai
+0.61531876	Miao
+0.61605115	Nanai
+0.61622916	Luzon
+0.61639072	Han_Guizhou
+0.61701734	Manchu_Bijie
+0.61768367	Tujia
+0.61774214	Manchu_Jinsha
+0.61811315	Korean_Antu
+0.61812386	Mongol_Bijie
+0.61844038	Miao_Songtao
+0.61861719	Gelao
+0.61946356	Korean
+0.61958523	Zaghawa_Chad
+0.61975824	Dong_Guizhou
+0.61986195	Han_Chongqing
+0.62040970	Han_Hubei
+0.62062538	Han_Fujian
+0.62099083	Han_Jiangsu
+0.62110468	Hmong
+0.62144483	Han_Zhejiang
+0.62185875	Mulam
+0.62225080	Baiku_Yao_Guizhou
+0.62228981	Dusun
+0.62237289	Miao_Leishan
+0.62251480	Han_Guangdong
+0.62260209	QingYao_Guizhou
+0.62263535	Dong_Hunan
+0.62288631	Changshan_Yao_Guizhou
+0.62289046	Quechua
+0.62302293	Zhuang
+0.62309974	Evenk
+0.62340014	She
+0.62380156	Li
+0.62393021	Bolivian_Cochabamba
+0.62513960	Negidal
+0.62548976	Maonan
+0.62681484	Atayal
+0.62731178	Nganasan
+0.62822656	Murut
+0.63239089	Sengwer
+0.63305670	Kikuyu
+0.63485642	Ami
+0.63538622	Igorot
+0.63717427	Chad_Daza_o
+0.63755459	Even
+0.63809171	Mixtec
+0.64019144	Zapotec
+0.64155633	Australian
+0.64359846	Mayan
+0.64502015	Nahua
+0.64749996	Hadza
+0.65024630	Sudan_Daju
+0.65302340	Zaghawa_Sudan
+0.65377996	Pima
+0.65387305	Cachi
+0.65441866	Huichol
+0.66099418	Bulala
+0.66420529	Colla
+0.66729867	Mixe
+0.66866580	Fulani_Guinea
+0.67021814	Bolivian_LaPaz
+0.67606786	Senegal_Halpularen
+0.67706288	Ethiopian_Gumuz
+0.67708663	Ethiopian_Mursi
+0.68612034	Aymara
+0.69155388	Yukpa
+0.69702032	Piapoco
+0.69913859	Chad_Maba
+0.69935680	Sudan_Nuba_Koalib
+0.70014356	Wichi
+0.70545486	Papuan_Highland_B
+0.71437228	Karitiana
+0.71465522	Chad_Dangaleat
+0.71867639	Ethiopian_Anuak
+0.71945985	Surui
+0.72148952	Sudanese
+0.72195294	Dinka
+0.72748859	Mada
+0.72794732	Senegal_Bedik_o
+0.73009835	Luhya_Kenya
+0.73295219	Luo
+0.73370580	Bantu_Kenya
+0.73847073	Gambian
+0.74027466	Mandenka
+0.74387797	Mwani
+0.74655449	Senegal_Bedik
+0.74719963	Laka
+0.75111712	Kaba
+0.75195782	Bantu_S.W.
+0.75331942	Sena
+0.75337013	Makhuwa
+0.75341619	Cameroon_Bakoko
+0.75380753	Mende_Sierra_Leone
+0.75489084	Ndau
+0.75606701	Nyanja
+0.75619262	Nyaneka
+0.75637296	Umbundu
+0.75655957	Yao
+0.75702285	Lemande
+0.75702471	Cameroon_Bangwa
+0.75848605	Kongo
+0.75852159	Changana
+0.75856641	Tikar_South
+0.75929238	Ganguela
+0.75961543	Cameroon_Bafut
+0.75967599	Ngumba
+0.75971946	Cameroon_Aghem
+0.76073219	Cameroon_Mbo
+0.76115817	Ronga
+0.76140981	Tswa
+0.76150382	Manyika
+0.76163540	Chopi
+0.76215773	Bantu_S.E.
+0.76314983	Igbo
+0.76329460	Bitonga
+0.76440932	Yoruba
+0.76641574	Esan_Nigeria
+0.78706848	Kosipe
+0.79379624	Bedzan
+0.80149570	Bakola
+0.80253788	Baka
+0.80593493	Papuan
+0.80618718	Koinanbe
+0.80820694	Papuan_Highland_A
+0.81735044	Biaka
+0.85832226	Khomani_San
+0.92805783	Ju_hoan_North
+0.94477778	Mbuti"""
+
+# Step 1: Split the data by new lines
+data_array = data.strip().split("\n")
+
+# Step 2: Replace tab characters in each line
+cleaned_data = [line.replace('\t', ' ') for line in data_array]
+
+print('arr', cleaned_data)
+
+# Separate arrays for distances and names
+distances = []
+names = []
+
+mapping = {
+    'German_Bavaria_Swabia': 'Bayern',
+    'US_New-York-City': 'New York',
+    'German_Baden-Wurttemberg': 'Baden-Württemberg',
+    'French_Alsace': 'Grand Est',
+    'German_Bavaria_Lower_Bavaria': 'Bayern',
+    'Swiss_German': 'Zürich',
+    'Austrian': 'Wien',
+    'German_Bavaria_Lower_Franconia': 'Bayern',
+    'Montenegrin': 'Podgorica',
+    'US_New-York': 'New York',
+    'Serbian': 'Belgrade',
+    'German_Hesse': 'Hessen',
+    'US_Philadelphia': 'Pennsylvania',
+    'German_Upper_Swabia': 'Baden-Württemberg',
+    'French_Nord': 'Hauts-de-France',
+    'German_Saarland': 'Saarland',
+    'German_Bavaria': 'Bayern',
+    'German_North_Rhine': 'Nordrhein-Westfalen',
+    'Italian_Northeast': 'Emilia-Romagna',
+    'German_Bavaria_Middle_Franconia_Erlangen': 'Bayern',
+    'Romanian': 'Bucharest',
+    'German_Bavaria_Upper_Palatinate': 'Bayern',
+    'German_Rhineland-Palatinate': 'Rheinland-Pfalz',
+    'Pennsylvania_Dutch': 'Pennsylvania',
+    'BelgianB': 'Brussels',
+    'Croatian': 'Zagreb',
+    'Moldovan': 'Chișinău',
+    'French_Auvergne': 'Auvergne-Rhône-Alpes',
+    'BelgianC': 'Walloon Brabant',
+    'French_Seine-Maritime': 'Normandy',
+    'US_Cajun': 'Louisiana',
+    'French-Canadian': 'Québec',
+    'Bosnian': 'Sarajevo',
+    'Swiss_French': 'Geneva',
+    'US_Louisiana': 'Louisiana',
+    'Slovenian': 'Ljubljana',
+    'Canada_Quebec': 'Québec',
+    'French_Occitanie': 'Occitanie',
+    'French_Provence': 'Provence-Alpes-Côte d\'Azur',
+    'Hungarian': 'Budapest',
+    'US_Chicago': 'Illinois',
+    'German_Bavaria_Middle_Franconia_Erlangen_o2': 'Bayern',
+    'BelgianA': 'Flemish Brabant',
+    'US_New-Jersey': 'New Jersey',
+    'German_North_Moravia': 'Moravskoslezský',
+    'US_California': 'California',
+    'Afrikaner': 'Gauteng',
+    'US_Northeast': 'East Coast',
+    'French_Paris': 'Île-de-France',
+    'French_Pas-de-Calais': 'Hauts-de-France',
+    'Bulgarian': 'Sofia',
+    'Italian_Aosta_Valley': 'Aosta Valley',
+    'US_Connecticut': 'Connecticut',
+    'Macedonian': 'Skopje',
+    'German_North_Rhine-Westphalia': 'Nordrhein-Westfalen',
+    'Polish_Malopolska': 'Lesser Poland',
+    'Polish_Upper_Silesia': 'Silesian',
+    'Pomak_Rhodope_Mountains': 'Central Macedonia',
+    'Polish_Mazovia': 'Masovian',
+    'Italian_Trentino_Alto_Adige': 'Trentino-Alto Adige/Südtirol',
+    'US_Ohio': 'Ohio',
+    'Canada_New-Brunswick': 'New Brunswick',
+    'US_Michigan': 'Michigan',
+    'German_Saxony': 'Sachsen',
+    'Afrikaner': 'Gauteng',
+    'US_Massachusetts': 'Massachusetts',
+    'US_Pennsylvania': 'Pennsylvania',
+    'Italian_Friuli_Venezia_Giulia_Sappada': 'Friuli Venezia Giulia',
+    'US_New-England': 'New England',
+    'Italian_Veneto': 'Veneto',
+    'Polish_Podlaskie': 'Podlachian',
+    'US_West': 'West Coast',
+    'Spanish_Mallorca': 'Balearic Islands',
+    'German_Bavaria_Middle_Franconia': 'Bayern',
+    'US_Illinois': 'Illinois',
+    'German_Thuringia': 'Thuringia',
+    'Spanish_Penedes': 'Catalonia',
+    'US_Kansas': 'Kansas',
+    'Turkish_West_Macedonia': 'North Macedonia',
+    'Spanish_Camp_de_Tarragona': 'Catalonia',
+    'US_Florida': 'Florida',
+        'German_Saxony_Leipzig': 'Sachsen',
+    'US_Midwest': 'Midwest Region',
+    'Spanish_Barcelones': 'Catalonia',
+    'Pomak_Danubian_Plain': 'Central Macedonia',
+    'US_West-Virginia': 'West Virginia',
+    'US_Missouri': 'Missouri',
+    'US_South-Carolina': 'South Carolina',
+    'US_North-Carolina': 'North Carolina',
+    'US_Virginia': 'Virginia',
+    'German_Lower_Silesia': 'Lower Silesian',
+    'US_Texas': 'Texas',
+    'German_Saxony-Anhalt': 'Saxony-Anhalt',
+    'US_Maine': 'Maine',
+    'US_South': 'Southern United States',
+    'Spanish_Girona': 'Catalonia',
+    'US_Tennessee': 'Tennessee',
+    'Spanish_Catalunya_Central': 'Catalonia',
+    'US_Indiana': 'Indiana',
+    'US_Nebraska': 'Nebraska',
+    'US_Kentucky': 'Kentucky',
+    'Gagauz': 'Gagauzia',
+    'German_Hamburg': 'Hamburg',
+    'French_Brittany': 'Brittany',
+    'US_Maryland': 'Maryland',
+    'Spanish_Peri-Barcelona': 'Catalonia',
+    'Canada_Nova-Scotia': 'Nova Scotia',
+    'Spanish_Baleares': 'Balearic Islands',
+    'Canada_Ontario': 'Ontario',
+    'US_Georgia': 'Georgia',
+    'Polish_Subcarpathia': 'Subcarpathian',
+    'US_Alabama': 'Alabama',
+    'Spanish_Lleida': 'Catalonia',
+    'Czech': 'Prague',
+    'US_Mississippi': 'Mississippi',
+    'Australia_Victoria': 'Victoria',
+    'US_Iowa': 'Iowa',
+    'Australia_Tasmania': 'Tasmania',
+    'Spanish_Menorca': 'Balearic Islands',
+    'German_Mennonite_Russia': 'Volga Federal District',
+    'Canada_Newfoundland': 'Newfoundland and Labrador',
+    'Dutch': 'Amsterdam',
+    "Spanish_Terres_de_l'Ebre": 'Catalonia',
+    'Spanish_Eivissa': 'Balearic Islands',
+    'US_Oklahoma': 'Oklahoma',
+    'Pomak_Almopia_Plain': 'Central Macedonia',
+    'Welsh': 'Wales',
+    'New_Zealand': 'Wellington',
+    'Australia_Colonial': 'Sydney',
+    'Spanish_Cataluna': 'Catalonia',
+    'Australia_New-South-Wales': 'New South Wales',
+    'US_Arkansas': 'Arkansas',
+    'US_Utah': 'Utah',
+    'Greek_East_Macedonia_and_Thrace': 'Eastern Macedonia and Thrace',
+    'Ukrainian_Zakarpattia': 'Transcarpathia',
+    'German_Westphalia': 'Nordrhein-Westfalen',
+    'Italian_Bergamo': 'Lombardy',
+    'Spanish_Pirineu': 'Catalonia',
+    'Italian_Liguria': 'Liguria',
+    'Australia_South-Australia': 'South Australia',
+    'US_Wisconsin': 'Wisconsin',
+    'Australia_Queensland': 'Queensland',
+    'Italian_Piedmont': 'Piedmont',
+    'Canada_West': 'Alberta',
+    'Pomak_Tikves_Plain': 'North Macedonia',
+    'English_Cornwall': 'Cornwall',
+    'English': 'England',
+    'Spanish_Valencia': 'Valencian Community',
+    'Swiss_Italian': 'Ticino',
+    'Spanish_Castello': 'Valencian Community',
+    'Spanish_Alacant': 'Valencian Community',
+    'Spanish_Galicia': 'Galicia',
+    'Spanish_Cantabria': 'Cantabria',
+    'German_Brandenburg': 'Brandenburg',
+    'Spanish_Castilla_La_Mancha': 'Castilla-La Mancha',
+    'Torbeši_Polog': 'North Macedonia',
+    'Orcadian': 'Orkney',
+    'Scottish': 'Scotland',
+    'Spanish_Castilla_Y_Leon': 'Castilla y León',
+    'Spanish_Biscay': 'Basque Country',
+    'German_Western_Pomerania': 'Mecklenburg-Vorpommern',
+    'Spanish_Murcia': 'Murcia',
+    'US_Minnesota': 'Minnesota',
+    'German_Schleswig-Holstein': 'Schleswig-Holstein',
+    'Turkish_North_Macedonia': 'North Macedonia',
+    'Polish_Silesia': 'Silesian',
+    'French_South': 'Southern France',
+    'Spanish_Aragon': 'Aragon',
+    'Spanish_Andalucia': 'Andalusia',
+    'German_Lower_Saxony': 'Lower Saxony',
+    'Spanish_Aragon_North': 'Aragon',
+    'Spanish_Extremadura': 'Extremadura',
+    'Italian_Lombardy': 'Lombardy',
+    'Spanish_La_Rioja': 'La Rioja',
+    'Portuguese': 'Lisbon',
+    'French_Chalosse': 'Nouvelle-Aquitaine',
+    'French_Bigorre': 'Occitanie',
+    'Slovakian': 'Bratislava',
+    'Spanish_Burgos': 'Castilla y León',
+    'Danish': 'Copenhagen',
+    'German_West_Pomerania_Voivodeship': 'Mecklenburg-Vorpommern',
+    'Italian_Emilia': 'Emilia-Romagna',
+    'German_Pomerania': 'Mecklenburg-Vorpommern',
+    'Ukrainian_Lviv': 'Lviv',
+    'German_Mecklenburg': 'Mecklenburg-Vorpommern',
+    'Polish_South': 'Lesser Poland',
+    'Albanian': 'Tirana',
+    'Basque_Araba': 'Basque Country',
+    'Greek_Central_Macedonia': 'Central Macedonia',
+    'French_Bearn': 'Nouvelle-Aquitaine',
+    'Irish': 'Dublin',
+    'Shetlandic': 'Shetland',
+    'Spanish_Soria': 'Castile and León',
+    'Greek_Macedonia': 'Macedonia',
+    'Rumelia_East': 'Eastern Rumelia',
+    'German_West_Prussia': 'Pomeranian Voivodeship',
+    'Norwegian': 'Oslo',
+    'Spanish_Navarra': 'Navarre',
+    'Polish_Wielkopolska': 'Greater Poland',
+    'Greek_Thessaly': 'Thessaly',
+    'Moldovan_o': 'Chișinău',
+    'German_East_Prussia_Braunsberg': 'Warmian-Masurian',
+    'Italian_Tuscany': 'Tuscany',
+    'Spanish_Pais_Vasco': 'Basque Country',
+    'Spanish_Asturias': 'Asturias',
+    'Basque_Navarre_Center': 'Navarre',
+    'German_Schleswig-Holstein_o': 'Schleswig-Holstein',
+    'Basque_Roncal': 'Navarre',
+    'Icelandic': 'Reykjavík',
+    'Swedish': 'Stockholm',
+    'Basque_French': 'Nouvelle-Aquitaine',
+    'German_Brandenburg_o': 'Brandenburg',
+    'Basque_Gipuzkoa': 'Gipuzkoa',
+    'Basque_Biscay': 'Bizkaia',
+    'Greek_West_Taygetos': 'West Taygetos',
+    'Basque_Gipuzkoa_Southwest': 'Gipuzkoa',
+    'Turkish_Thessaly': 'Thessaly',
+    'Basque_Lower_Navarre': 'Lower Navarre',
+    'French_Corsica': 'Corsica',
+    'Basque_Spanish': 'Basque Country',
+    'Sorb_Niederlausitz': 'Lower Lusatia',
+    'Turkish_Deliorman': 'Deliorman',
+    'Greek_Messenia': 'Messenia',
+    'Basque_Soule': 'Soule',
+    'Basque_Navarre_North': 'Navarre',
+    'Patriyot_West_Macedonia': 'West Macedonia',
+    'Greek_Achaea': 'Achaea',
+    'Basque_Baztan': 'Baztan',
+    'Greek_Arcadia': 'Arcadia',
+    'German_Bavaria_Middle_Franconia_Erlangen_o1': 'Bayern',
+    'Greek_Elis': 'Elis',
+    'Turkish_Chitak': 'Chitak',
+    'Greek_Argolis': 'Argolis',
+    'German_Upper_Silesia': 'Silesian',
+    'Italian_Marche': 'Marche',
+    'Greek_Corinthia': 'Corinthia',
+    'Greek_Peloponnese': 'Peloponnese',
+    'Polish_Warmia-Masuria': 'Warmian-Masurian',
+    'Italian_Umbria': 'Umbria',
+    'Ukrainian_Rivne': 'Rivne',
+    'Ukrainian_Sumy': 'Sumy',
+    'Greek_East_Taygetos': 'East Taygetos',
+    'Ukrainian_Zhytomyr': 'Zhytomyr',
+    'Russian_Belgorod': 'Belgorod',
+    'Cossack_Ukrainian': 'Cossack Region',
+    'Greek_Laconia': 'Laconia',
+    'Ukrainian_Dnipro': 'Dnipro',
+    'German_East_Prussia_Masuria': 'Masuria',
+    'Spanish_Canarias': 'Canary Islands',
+    'Ukrainian_Chernihiv': 'Chernihiv',
+    'Russian_Voronez': 'Voronezh',
+    'Italian_Lazio': 'Lazio',
+    'Russian_Orel': 'Oryol',
+    'Greek_North_Tsakonia': 'North Tsakonia',
+    'Polish_Kuyavia': 'Kuyavia-Pomerania',
+    'Russian_Kursk': 'Kursk',
+    'Turkish_Rumeli': 'Rumelia',
+    'Russian_Smolensk': 'Smolensk',
+    'Greek_Cyclades_Kea': 'Cyclades',
+    'Russian_Ryazan': 'Ryazan',
+    'Italian_Molise': 'Molise',
+    'Roma_Barcelona': 'Barcelona',
+    'German_Hamburg_o': 'Hamburg',
+    'Italian_Abruzzo': 'Abruzzo',
+    'Ukrainian_Zhytomyr_o': 'Zhytomyr',
+    'Greek_Izmir': 'Izmir',
+    'Russian_Kaluga': 'Kaluga',
+    'Greek_South_Tsakonia': 'South Tsakonia',
+    'Sicilian_West': 'Sicily',
+    'Belarusian': 'Minsk',
+    'Italian_Apulia': 'Apulia',
+    'Russian_Tver': 'Tver',
+    'Cossack_Kuban': 'Kuban',
+    'Greek_Apulia': 'Apulia',
+    'German_East_Prussia_Memelland': 'Memelland',
+    'Italian_Basilicata': 'Basilicata',
+    'Turkish_Canakkale_Europe': 'Çanakkale',
+    'Lithuanian_PA': 'Lithuania',
+    'Belmonte_Jew': 'Belmonte',
+    'Greek_Cyclades_Milos': 'Cyclades',
+    'Sicilian_East': 'Sicily',
+    'Russian_Pskov': 'Pskov',
+    'Moksha': 'Moksha',
+    'Ashkenazi_Ukraine': 'Ukraine',
+    'Ashkenazi_Russia': 'Russia',
+    'Ashkenazi_Belarussia': 'Belarus',
+    'Russian_Yaroslavl': 'Yaroslavl',
+    'Greek_Crete_Chania': 'Crete',
+    'Italian_Campania': 'Campania',
+    'Lithuanian_VA': 'Lithuania',
+    'Ashkenazi_Lithuania': 'Lithuania',
+    'Ashkenazi_Romania': 'Romania',
+    'Ashkenazi_Poland': 'Poland',
+    'Finnish_Southwest': 'Finland',
+    'Maltese': 'Malta',
+    'Greek_Deep_Mani': 'Mani Peninsula',
+    'Greek_Cyclades_Tinos': 'Cyclades',
+    'Italian_Calabria': 'Calabria',
+    'Mordovian': 'Mordovia',
+    'Erzya': 'Erzia',
+    'Greek_Crete_Heraklion': 'Crete',
+    'Russian_Kostroma': 'Kostroma',
+    'Turkish_Crete': 'Crete',
+    'Greek_Crete': 'Crete',
+    'Greek_Crete_Lasithi': 'Crete',
+    'Estonian': 'Estonia',
+    'Ashkenazi_Austria': 'Austria',
+    'Finnish_Southeast': 'Southeast Finland',
+    'Lithuanian_VZ': 'Lithuania',
+    'Ashkenazi_RA': 'Austria',
+    'Lithuanian_RA': 'Lithuania',
+    'Ingrian': 'Ingria',
+    'Ashkenazi_Latvia': 'Latvia',
+    'Ashkenazi_Germany': 'Germany',
+    'Greek_Cyclades_Amorgos': 'Cyclades',
+    'Finnish_Central': 'Central Finland',
+    'Roma_Madrid': 'Madrid',
+    'Russian_Krasnoborsky': 'Krasnoborsk',
+    'Lithuanian_SZ': 'Lithuania',
+    'Ashkenazi_France': 'France',
+    'Lithuanian_PZ': 'Lithuania',
+    'Greek_Kos': 'Kos',
+    'Latvian': 'Latvia',
+    'Italian_Jew': 'Jewish',
+    'Finnish_North': 'North Finland',
+    'Greek_Dodecanese': 'Dodecanese',
+    'Karelian': 'Karelia',
+    'Turkish_Lesbos': 'Lesbos',
+    'Finnish_East': 'East Finland',
+    'Turkish_Jew': 'Jew',
+    'Vepsian': 'Veps',
+    'Greek_Dodecanese_Rhodes': 'Dodecanese',
+    'Tatar_Mishar': 'Mishar',
+    'Turkish_Dodecanese': 'Dodecanese',
+    'Bulgarian_Jew': 'Jew',
+    'Roma_Bilbao': 'Bilbao',
+    'Sardinian': 'Sardinia',
+    'Romaniote_Jew': 'Jew',
+    'Russian_Pinega': 'Pinega',
+    'Russian_Pinezhsky': 'Pinezhsky',
+    'Algerian_Jew': 'Jew',
+    'Roma_Porto': 'Porto',
+    'Moroccan_Jew': 'Jew',
+    'Turkish_Nevsehir': 'Nevşehir',
+    'Turkish_Balikesir': 'Balıkesir',
+    'Roma_Granada': 'Granada',
+    'Turkish_Konya': 'Konya',
+    'Kumyk': 'Kumyk',
+    'Kabardin': 'Kabardino-Balkar',
+    'Kaitag': 'Kaitag',
+    'Cypriot': 'Cyprus',
+    'Greek_Central_Anatolia': 'Central Anatolia',
+    'Andian_B': 'Andia',
+    'Turkish_Kayseri': 'Kayseri',
+    'Turkish_Aydin': 'Aydın',
+    'Avar_o': 'Avar',
+    'Tabasaran': 'Tabasaran',
+    'Turkish_Denizli': 'Denizli',
+    'Cherkes': 'Cherkess',
+    'Syrian_Jew': 'Jew',
+    'Tat_Dagestan_Dzhalgan': 'Dagestan',
+    'Lezgin': 'Lezgian',
+    'Ratlub': 'Ratlub',
+    'Karata': 'Karata',
+    'Adygei': 'Adyghea',
+    'Circassian': 'Circassia',
+    'Akhvakh': 'Akhvakh',
+    'Chechen': 'Chechnya',
+    'Turkish_Sivas': 'Sivas',
+    'Balkar': 'Balkaria',
+    'Turkish_Antalya': 'Antalya',
+    'Bagvalin': 'Bagvalin',
+    'Lak': 'Lak',
+    'Ingushian': 'Ingushetia',
+    'Karachay': 'Karachay',
+    'Syrian_Aleppo': 'Aleppo',
+    'Azerbaijani_Dagestan': 'Dagestan',
+    'Russian_Leshukonsky': 'Leshukonsky',
+    'Avar': 'Avar',
+    'Tunisian_Jew': 'Jew',
+    'Abazin': 'Abaza',
+    'Georgian_Tush': 'Tush',
+    'Darginian': 'Dargwa',
+    'Kubachinian': 'Kubachin',
+    'Bagvalin_o': 'Bagvalin',
+    'Chamalin': 'Chamali',
+    'Azerbaijani_Republic_Shaki': 'Shaki',
+    'Libyan_Jew': 'Jew',
+    'Tsez_B': 'Tsez',
+    'Tat_Azerbaijan': 'Tat',
+    'Tindal': 'Tindal',
+    'Armenian_Artsakh': 'Artsakh',
+    'Tat_Dagestan_Nyugdi': 'Dagestan',
+    'Azerbaijani_Republic_Gabala': 'Gabala',
+    'Udi': 'Udi',
+    'Georgian_Khevs': 'Khevsureti',
+    'Hunzib': 'Hunzib',
+    'Roma_Balkans': 'Balkans',
+    'Andian_A': 'Andia',
+    'Komi_A': 'Komi',
+    'Armenian_Parspatunik': 'Armenia',
+    'Azerbaijani_Turkey': 'Turkey',
+    'Armenian_Gesaria': 'Gesaria',
+    'Armenian_Syunik': 'Syunik',
+    'Alevi_Dersim': 'Dersim',
+    'Kurd_Syria': 'Kurdistan',
+    'Alawite': 'Alawites',
+    'Kurd_Kurmanji_Turkey': 'Kurmanji',
+    'Tatar_Kazan': 'Kazan',
+    'Turkish_Erzurum': 'Erzurum',
+    'Lebanese_Muslim': 'Lebanon',
+    'Ezid': 'Ezidi',
+    'Druze': 'Druze',
+    'North_Ossetian': 'North Ossetia',
+    'Georgian_NorthEast': 'North Georgia',
+    'Azerbaijani_Iran_EastAz': 'East Azerbaijan',
+    'Azerbaijani_Iran_WestAz_Maku': 'West Azerbaijan',
+    'Bukharian_Jew': 'Jew',
+    'Karaite_Egypt': 'Karaite',
+    'Lebanese_Druze': 'Lebanon',
+    'Azerbaijani_Republic_Agjabedi': 'Agjabadi',
+    'Mountain_Jew_Chechnya': 'Chechnya',
+    'Kurd_Zaza_Turkey': 'Zaza',
+    'Turkish_Giresun': 'Giresun',
+    'Ossetian': 'Ossetia',
+    'Greek_Trabzon': 'Trabzon',
+    'Syrian_Homs': 'Homs',
+    'Azerbaijani_Iran_Ardabil': 'Ardabil',
+    'Lebanese_Shia_Muslim_Beirut': 'Beirut',
+    'Turkish_Ahiska': 'Ahiska',
+    'Armenian_Erzurum': 'Erzurum',
+    'Tajik_Yaghnobi': 'Yaghnobi',
+    'Syrian_Hama': 'Hama',
+    'Georgian_Kart': 'Kartli',
+    'Syrian': 'Syria',
+    'Georgian_Jew': 'Jew',
+    'Georgian_Meskheti': 'Meskheti',
+    'Tsez_A': 'Tsez',
+    'Armenian_Ararat': 'Ararat',
+    'Armenian_Aintab': 'Aintab',
+    'Georgian_Mtiuleti': 'Mtiuleti',
+    'Kurd_Iraq': 'Iraq',
+    'Hinukh': 'Hinukh',
+    'Kurd_Sorani_Iran_Mukriyan': 'Mukriyan',
+    'Lebanese_Sunni_Muslim_Beirut': 'Beirut',
+    'Turkish_Trabzon': 'Trabzon',
+    'Armenian_Gurin': 'Gurin',
+    'Lebanese_Christian': 'Lebanon',
+    'Mountain_Jew_Dagestan': 'Dagestan',
+    'Iranian_Zoroastrian': 'Zoroastrian',
+    'Kurd_Kurmanji_Turkey_o': 'Kurmanji',
+    'Kurd_USSR': 'Kurdistan',
+    'Georgian_Kakh': 'Kakheti',
+    'Assyrian_o': 'Assyria',
+    'Lebanese_Maronite_Christian_Zgharta': 'Zgharta',
+    'Iranian_Central': 'Central Iran',
+    'Talysh_Azerbaijan': 'Talysh',
+    'Lebanese_Orthodox_Christian_Koura': 'Koura',
+    'Chaldean_Iraq': 'Chaldea',
+    'Lebanese_Sunni_Muslim_Dinniyeh': 'Dinniyeh',
+    'Iranian_Cosmopolitan_Tehran': 'Tehran',
+    'Iranian_Persian_Yazd': 'Yazd',
+    'Armenian_Urfa': 'Urfa',
+    'Georgian_Samtckhe': 'Samtavisi',
+    'Georgian_Laz': 'Laz',
+    'Assyrian_Mardin': 'Mardin',
+    'Iranian_Persian_Fars': 'Fars',
+    'Assyrian': 'Assyria',
+    'Abkhasian_Gudauta': 'Abkhazia',
+    'Pamiri_Rushan': 'Rushan',
+    'Abkhasian': 'Abkhazia',
+    'Armenian_Hemsheni': 'Hemshin',
+    'Iraqi_Arab_West': 'Iraq',
+    'Iranian_Jew': 'Jew',
+    'Turkmen_o': 'Turkmen',
+    'Karaite_Iraq': 'Karaite',
+    'Georgian_Javakheti': 'Javakheti',
+    'Iranian_Qashqai': 'Qashqai',
+    'Mountain_Jew_Azerbaijan': 'Azerbaijan',
+    'Palestinian_Beit_Sahour': 'Beit Sahour',
+    'Iranian_Lor_Khorramabad': 'Khorramabad',
+    'Irani_Zoroastrian_India': 'Zoroastrian',
+    'Iraqi_Arab_Central': 'Central Iraq',
+    'Mandaean_Iraq': 'Mandaean',
+    'Georgian_Ajar': 'Adjara',
+    'Iranian_Persian_Shiraz': 'Shiraz',
+    'Saami_Kola': 'Kola',
+    'Georgian_Svaneti': 'Svaneti',
+    'Georgian_Lechkhumi': 'Lechkhumi',
+    'Jordanian': 'Jordan',
+    'Iranian_Lor_Bakhtiari': 'Bakhtiari',
+    'Iraqi_Jew': 'Jew',
+    'Kurdish_Jew': 'Jew',
+    'Georgian_West': 'West Georgia',
+    'Georgian_Imer': 'Imereti',
+    'Pamiri_Shugnan': 'Shugnan',
+    'Georgian_Megr': 'Meganior',
+    'Georgian_Guria': 'Guria',
+    'Nash_Didan_Jew_Urmia': 'Urmia',
+    'Iranian_Persian_Khorasan': 'Khorasan',
+    'Palestinian': 'Palestine',
+    'Iranian_Arab_Khuzestan': 'Khuzestan',
+    'Samaritan': 'Samaritan',
+    'Iranian_Mazandarani_o': 'Mazandarani',
+    'Tatar_Lipka': 'Lipka Tatars',
+    'Tajik_Tajikistan_Kulob': 'Kulob',
+    'Georgian_Ratcha': 'Racha',
+    'Iraqi_Arab_South': 'South Iraq',
+    'Iranian_Mazandarani': 'Mazandarani',
+    'EmiratiC': 'United Arab Emirates',
+    'Tajik_Tajikistan_Ayni': 'Ayni',
+    'Besermyan': 'Besermyanka',
+    'Tajik_Tajikistan_Hisor': 'Hisor',
+    'Pamiri_Badakhshan': 'Badakhshan',
+    'BedouinA': 'Bedouin',
+    'Parsi_Pakistan': 'Parsi',
+    'Pamiri_Ishkashim': 'Ishkashim',
+    'Parsi_India': 'Parsi',
+    'Cochin_Jew_A': 'Cochin',
+    'Tunisia': 'Tunisia',
+    'Pashtun_Pakistan_Bettani': 'Bettani',
+    'Pashtun_Afghanistan_Paktia': 'Paktia',
+    'Pashtun_Afghanistan': 'Afghanistan',
+    'Turkmen_Iran': 'Turkmenistan',
+    'Pashtun_Afghanistan_North': 'Northern Afghanistan',
+    'Chuvash': 'Chuvashia',
+    'Pamiri_Wakhi': 'Wakhi',
+    'Iranian_Bandari': 'Bandari',
+    'EmiratiB': 'United Arab Emirates',
+    'Udmurt': 'Udmurtia',
+    'Balochi_Iran_o': 'Balochistan',
+    'Pamiri_Sarikoli': 'Sarikoli',
+    'Pashtun_Northeast_Afghanistan': 'Northeast Afghanistan',
+    'Egyptian_Copt': 'Copts',
+    'Tajik_Afghanistan': 'Tajikistan',
+    'SaudiA': 'Saudi Arabia',
+    'EgyptianA': 'Egypt',
+    'Pashtun_Pakistan_Khattak_Nowshera': 'Nowshera',
+    'Tatar_Crimean_steppe': 'Crimea',
+    'Yemenite_Amran': 'Amran',
+    'Saami': 'Sámi',
+    'Pashtun_Afghanistan_Northeast': 'Northeast Afghanistan',
+    'EgyptianB': 'Egypt',
+    'SaudiB': 'Saudi Arabia',
+    'Pashtun_Uthmankhel': 'Uthmankhel',
+    'Moroccan_North': 'Northern Morocco',
+    'Saudi_Mecca': 'Mecca',
+    'Pashtun_Tarkalani': 'Tarkalani',
+    'Balochi_Iran': 'Balochistan',
+    'Ror': 'Ror',
+    'Saudi_Najd': 'Najd',
+    'Kho': 'Kho',
+    'Turkmen': 'Turkmenistan',
+    'Yemenite_Dhamar': 'Dhamar',
+    'Yemenite_Ibb': 'Ibb',
+    'Makrani': 'Makran',
+    'EmiratiA': 'United Arab Emirates',
+    'Pashtun_Yusufzai': 'Yusufzai',
+    'Tunisian_Berber_Zraoua': 'Zraoua',
+    'Balochi_Pakistan': 'Baluchistan',
+    'Yemenite_Jew': 'Jew',
+    'Yemenite_Al_Bayda': 'Al Bayda',
+    'Kalash': 'Kalash',
+    "Yemenite_Ma'rib": 'Ma\'rib',
+    'Yemenite_Hadramaut': 'Hadramaut',
+    'Berber_Tunisia_Sen': 'Senegal',
+    'Brahui': 'Brahui',
+    'Tunisian_Berber_Tamezret': 'Tamezret',
+    'Jat_Haryana': 'Haryana',
+    'Turkmen_Uzbekistan': 'Uzbekistan',
+    'Berber_Tunisia_Chen': 'Tunisia',
+    'Yemenite_Al_Jawf': 'Al Jawf',
+    'Tunisian': 'Tunisia',
+    'Saudi_Jizan': 'Jizan',
+    'Jat_Uttar_Pradesh': 'Uttar Pradesh',
+    'Libyan': 'Libya',
+    'Saudi': 'Saudi Arabia',
+    'BedouinB': 'Bedouin',
+    'Pashtun_Pakistan': 'Pakistan',
+    'Kamboj': 'Kamboj',
+    'Tunisian_Berber_Matmata': 'Matmata',
+    'Tunisian_Rbaya': 'Rbaya',
+    'Yemenite_Hajjah': 'Hajjah',
+    'Yemenite_Mahra': 'Mahra',
+    'Sindhi_o': 'Sindh',
+    'Algerian': 'Algeria',
+    'Jat_Punjab_Muslim': 'Punjab',
+    'Egyptian_o': 'Egypt',
+    'Jat_Punjab_Sikh': 'Punjab',
+    'Sudan_Arab_Rashaayda': 'Sudan',
+    'Khanty_o1': 'Khanty',
+    'Mumbai_Jew': 'Mumbai',
+    'Mari': 'Mari',
+    'Khatri': 'Khatri',
+    'Arora': 'Arora',
+    'Parsi_India_o': 'Parsi',
+    'Arain': 'Arain',
+    'Mozabite': 'Mozabite',
+    'Gujar_Swat_o': 'Swat',
+    'Punjabi_Sikh_India': 'Sikh',
+    'Kohistani': 'Kohistan',
+    'Awan': 'Awan',
+    'Brahmin_Gujarat_Nagar': 'Gujarat',
+    'Tunisian_Douz': 'Douz',
+    'Rajput_Punjab': 'Punjab',
+    'Shia_Uttar_Pradesh': 'Uttar Pradesh',
+    'Kashmiri_Pandit': 'Kashmir',
+    'Rajput_Potohar': 'Pothohar',
+    'Burusho': 'Burushaski',
+    'Jat_Pahari': 'Pahari',
+    'Tarkhan_Sikh/Hindu': 'Tarkhan',
+    'Sindhi': 'Sind',
+    'Moroccan': 'Morocco',
+    'Gujar_Punjab': 'Punjab',
+    'Gujarati_Bharuch_Muslim': 'Bharuch',
+    'Kashmiri_India_Muslim': 'Kashmir',
+    'Gujar_Swat': 'Swat',
+    'Punjabi_Muslim_India': 'Muslim Punjab',
+    'Punjabi_Hindu_India': 'Hindu Punjab',
+    'Brahmin_Punjab': 'Punjab',
+    'Tarkhan_Muslim': 'Tarkhan',
+    'Kashmiri_Pakistan': 'Kashmir',
+    'Bashkir': 'Bashkortostan',
+    'Gujar_Kashmir': 'Kashmir',
+    'Brahmin_Rajasthan': 'Rajasthan',
+    'Rajput_Rajasthan': 'Rajasthan',
+    'Rajput_AJK': 'AJK',
+    'Uzbek': 'Uzbekistan',
+    'Kashmiri_Muslim': 'Kashmir',
+    'Pathan_Bhopal': 'Bhopal',
+    'Kashmiri_Pakistan_o': 'Kashmir',
+    'Mirpuri_Pakistan': 'Mirpur',
+    'Brahmin_Uttar_Pradesh_Braj': 'Uttar Pradesh',
+    'Nepali_Indo-Aryan_A': 'Nepal',
+    'Khatri_o': 'Khatri',
+    'Berber_MAR_ERR': 'Berber',
+    'Brahmin_Jammu_Dogra': 'Jammu',
+    'Bahun': 'Bahun',
+    'Brahmin_Himachal_Pradesh': 'Himachal Pradesh',
+    'Brahmin_Gujarat_Bardai': 'Gujarat',
+    'Brahmin_Gujarat': 'Gujarat',
+    'Tyagi': 'Tyagi',
+    'Syed_Uttar_Pradesh_West': 'Uttar Pradesh',
+    'Gujar_Rajasthan': 'Rajasthan',
+    'Gujar_Madhya_Pradesh': 'Madhya Pradesh',
+    'Brahmin_Uttar_Pradesh_Awadh': 'Awadh',
+    'Bhumihar_Bihar': 'Bihar',
+    'Balti_o': 'Balti',
+    'Brahmin_Gujarat_Audichya': 'Gujarat',
+    'Rajput_Madhya_Pradesh': 'Madhya Pradesh',
+    'Saharawi': 'Western Sahara',
+    'Maori': 'New Zealand',
+    'Lubana': 'Ludhiana',
+    'Berber_MAR_TIZ': 'Berber',
+    'Brahmin_Uttar_Pradesh_East': 'East Uttar Pradesh',
+    'Hazara_o': 'Hazara',
+    'Cochin_Jew_B': 'Cochin',
+    'Iranian_Bandari_Zanji': 'Bandari',
+    'Kshatriya_Uttar_Pradesh_East': 'Uttar Pradesh',
+    'Tatar_Siberian': 'Siberia',
+    'Nogai_Dobruja': 'Dobruja',
+    'Brahmin_Mondal': 'Mondal',
+    'Punjabi_Lahore': 'Lahore',
+    'Nepali_Indo-Aryan_B': 'Nepal',
+    'Balti': 'Balti',
+    'Brahmin_West_Bengal': 'West Bengal',
+    'Brahmin_Konkani_Catholic': 'Konkani',
+    'Yukagir_Forest': 'Forest',
+    'Konkani_Christian_A': 'Konkani',
+    'Brahmin_Telugu': 'Telugu',
+    'Brahmin_Chitpavan': 'Chitpavan',
+    'Brahmin_Kerala_Nambudiri': 'Nambudiri',
+    'Brahmin_Uttarakhand': 'Uttarakhand',
+    'Brahmin_Iyengar': 'Iyengar',
+    'Brahmin_Karnataka_Tulu': 'Tulu',
+    'Poduval_Kerala_North': 'Kerala',
+    'Maniyani': 'Maniyani',
+    'Brahmin_Telugu_Vaidiki': 'Vaidiki',
+    'Tlingit': 'Alaska',
+    'Ket_o1': 'Ket',
+    'Knanaya': 'Knanaya',
+    'Brahmin_Tamil_Nadu': 'Tamil Nadu',
+    'Brahmin_Telugu_Niyogi': 'Niyogi',
+    'Brahmin_Tamil_Nadu_Iyer': 'Iyer',
+    'Sonar_Marathi': 'Marathi',
+    'Nair': 'Nairs',
+    'Kshatriya_Uttar_Pradesh_East_o': 'Uttar Pradesh',
+    'Brahmin_Gaud_Sawarswat': 'Sawarswat',
+    'Brahmin_Tamil_Nadu_Iyengar': 'Iyengar',
+    'Konkani_Catholic': 'Konkani',
+    'Baniya_Gujarat': 'Gujarat',
+    'Nogai': 'Nogai',
+    'Brahmin_Gujarat_o': 'Gujarat',
+    'Bahun_o': 'Bahun',
+    'Nepali_Indo-Aryan_C': 'Nepali',
+    'Uygur': 'Uygur',
+    'Tharu_o1': 'Tharu',
+    'Bunt_Tulu': 'Tulu',
+    'Kayastha_Bihar': 'Bihar',
+    'Nasrani': 'Nasrani',
+    'Chamar_Uttar_Pradesh_o': 'Uttar Pradesh',
+    'Rajput_Mondal': 'Mondal',
+    'Komi_B': 'Komi',
+    'Toda': 'Toda',
+    'Baniya_Punjab': 'Punjab',
+    'Gujarati': 'Gujarat',
+    'Rajput_Garhwal': 'Garhwal',
+    'Tatar_Siberian_Zabolotniye': 'Tatar',
+    'Mappila_Muslim': 'Mappila',
+    'Kanjar': 'Kanjar',
+    'Kol': 'Kol',
+    'Karakalpak': 'Karakalpakstan',
+    'Moroccan_South': 'Southern Morocco',
+    'Dharkar': 'Dharkar',
+    'Hazara': 'Hazara',
+    'Reddy': 'Reddy',
+    'Thiyya': 'Thiyya',
+    'Brahmin_Uttar_Pradesh_East_o': 'East Uttar Pradesh',
+    'Kamboj_o': 'Kamboj',
+    'Bengali_Bangladesh_Sylhet': 'Sylhet',
+    'Thiyya_Thrissur': 'Thrissur',
+    'Saliya_Kerala': 'Kerala',
+    'Bengali_Bangladesh_SouthEast': 'Southeast Bangladesh',
+    'Kamma': 'Kamma',
+    'Altaian_Kizhi_o': 'Altaian Kizhi',
+    'Koli_Gujarat': 'Gujarat',
+    'Velama': 'Velama',
+    'Ezhava': 'Ezhava',
+    'Uttar_Pradesh_Scheduled_Castes': 'Uttar Pradesh',
+    'Khandayat_Odisha': 'Odisha',
+    'Vellalar': 'Vellalar',
+    'Mansi': 'Mansi',
+    'Pillai_Tamil': 'Tamil',
+    'Telugu': 'Telugu',
+    'Balija': 'Balija',
+    'Bengali_Bangladesh': 'Bangladesh',
+    'Baniya_Uttar_Pradesh_Gupta': 'Gupta',
+    'Sri_Lankan': 'Sri Lanka',
+    'Konkani_Christian_B': 'Konkani',
+    'Yadav_Telugu': 'Telugu',
+    'Tamil_Sri_Lanka': 'Sri Lanka',
+    'Dusadh': 'Dusadh',
+    'Satnami_Chhattisgarh': 'Chhattisgarh',
+    'Greenlander_West': 'West Greenland',
+    'Maratha': 'Maharashtra',
+    'Punjabi_Christian_India': 'Punjab',
+    'Piramalai_Kallar': 'Kallar',
+    'Pulaya_Kerala': 'Kerala',
+    'Bengali_India': 'Bengal',
+    'Tubalar': 'Tubalar',
+    'Sinhala': 'Sri Lanka',
+    'Rohingya': 'Rohingya',
+    'Tharu_o2': 'Tharu',
+    'Chenchu': 'Chenchu',
+    'Nadar': 'Nadar',
+    'Kazakh': 'Kazakhstan',
+    'Eritrean': 'Eritrean',
+    'Relli': 'Relli',
+    'Chamar_Uttar_Pradesh': 'Uttar Pradesh',
+    'Saho_Eritrean': 'Eritrea',
+    'Khanty': 'Khanty',
+    'Shor_Mountain': 'Shor',
+    'Ethiopian_Tigray': 'Tigray',
+    'Sakilli': 'Sakilli',
+    'Damai': 'Damai',
+    'Shor_Khakassia': 'Khakassia',
+    'Pallan': 'Pallan',
+    'North_Kannadi': 'Kannada',
+    'Shor': 'Shor',
+    'Ethiopian_Afar': 'Afar',
+    'Nepali_Indo-Aryan_D': 'Nepal',
+    'Hakkipikki': 'Hakkipikki',
+    'Madiga': 'Madiga',
+    'Kazakh_Xinjiang': 'Xinjiang',
+    'Ethiopian_Amhara': 'Amhara',
+    'Ethiopian_Agaw': 'Agaw',
+    'Kirghiz_Tajikistan_Pamir': 'Pamir',
+    'Baggara_Arab_Chad_A': 'Chad',
+    'Paniya_o': 'Paniya',
+    'Kurichiya': 'Kurichiya',
+    'Ethiopian_Jew': 'Jew',
+    'Teleut': 'Teleut',
+    'Mala': 'Mala',
+    'Nyishi': 'Nyishi',
+    'Khakass': 'Khakass',
+    'Kirghiz': 'Kirghiz',
+    'Kirghiz_China': 'Kirghiz',
+    'Buryat_o': 'Buryat',
+    'Vishwakarma_Kerala': 'Kerala',
+    'Newar': 'Newar',
+    'Irula': 'Irula',
+    'Pulliyar': 'Pulliyar',
+    'Sudan_Arab_Kababish': 'Sudanese',
+    'Khanty_o2': 'Khanty',
+    'Cree': 'Cree',
+    'Berber_Algeria': 'Algeria',
+    'Kurumba': 'Kurumba',
+    'Kadar': 'Kadar',
+    'Brahmin_Manipuri': 'Manipuri',
+    'Malayan': 'Malaysia',
+    'Greenlander_East': 'East Greenland',
+    'Kazakh_China': 'Kazakhstan',
+    'Gond': 'Gond',
+    'Ethiopian_Oromo': 'Oromo',
+    'Teleut_o': 'Teleut',
+    'Nepali_Indo-Aryan_o1': 'Nepal',
+    'Khakass_Kachins': 'Khakass',
+    'Mawasi_Chhattisgarh': 'Chhattisgarh',
+    'Asur': 'Asur',
+    'Paniya': 'Paniya',
+    'Altaian': 'Altaian',
+    'Selkup': 'Selkup',
+    'Jarawa': 'Jarawa',
+    'Onge': 'Onge',
+    'Nihali': 'Nihal',
+    'Altaian_Kizhi': 'Altaian',
+    'Nenets': 'Nenets',
+    'Somali': 'Somalia',
+    'Santhal': 'Santhal',
+    'Ket': 'Ket',
+    'Bhunjia_Chhattisgarh': 'Chhattisgarh',
+    'Bhumij': 'Bhumij',
+    'Korwa': 'Korwa',
+    'Ho': 'Ho',
+    'Birhor': 'Birhor',
+    'Gadaba': 'Gadaba',
+    'Ethiopian_Wolayta': 'Wolayta',
+    'Dhurwa_Odisha': 'Odisha',
+    'Tharu': 'Tharu',
+    'Khonda_Dora': 'Khonda',
+    'Somali_Kenya': 'Somalia',
+    'Kusunda': 'Kusunda',
+    'Mongol_Xinjiang': 'Xinjiang',
+    'Nepali_Indo-Aryan_o2': 'Nepal',
+    'Mongolian': 'Mongolia',
+    'Nenets_Tundra': 'Tundra',
+    'Juang': 'Juang',
+    'Nenets_Forest': 'Forest',
+    'Bonda': 'Bonda',
+    'Ket_o2': 'Ket',
+    'Kalmyk': 'Kalmyk',
+    'Mogush': 'Mogush',
+    'Rendille': 'Rendille',
+    'Maniq': 'Maniq',
+    'Jehai': 'Jehai',
+    'Tuvinian': 'Tuvinian',
+    'Iraqw': 'Iraqw',
+    'Nepali_Tamang_Simigaon': 'Tamang',
+    'Mongol': 'Mongol',
+    'Magar': 'Magar',
+    'Dongxiang': 'Dongxiang',
+    'Tamang': 'Tamang',
+    'Dolgan': 'Dolgan',
+    'Aeta': 'Aeta',
+    'Agta': 'Agta',
+    'Fulani': 'Fulani',
+    'Mongol_Inner_Mongolia': 'Inner Mongolia',
+    'Salar': 'Salar',
+    'Jamatia': 'Jamatia',
+    'Yuku': 'Yuku',
+    'Buryat': 'Buryat',
+    'Evenk_o': 'Evenk',
+    'Tripuri': 'Tripuri',
+    'Dungan': 'Dungan',
+    'Riang': 'Riang',
+    'Todzin': 'Todzin',
+    'Baoan': 'Baoan',
+    'Datog': 'Datog',
+    'Khamnegan': 'Khamnegan',
+    'Burmese': 'Burma',
+    'Batak': 'Batak',
+    'Thai': 'Thailand',
+    'Mon': 'Mon',
+    'Garo': 'Garo',
+    'Mongol_IMAR': 'IMAR',
+    'Hui': 'Hui',
+    'Gurung': 'Gurung',
+    'Tibetan_Gannan': 'Gannan',
+    'Bonan': 'Bonan',
+    'Baggara_Arab_Sudan': 'Baggara',
+    'Elmolo': 'Elmolo',
+    'Tibetan_Gangcha': 'Gangcha',
+    'Nyah_Kur': 'Nyah Kur',
+    'Tibetan_Xunhua': 'Xunhua',
+    'Yakut_Sakha': 'Sakha',
+    'Nepali_Tamang_Tashinam': 'Tamang',
+    'Tu': 'Tu',
+    'Madagascar_Vezo': 'Vezo',
+    'Ethiopian_Ari_cultivator': 'Ari',
+    'Fulani_Burkina_Faso_Ziniare': 'Ziniare',
+    'Malay': 'Malaysia',
+    'Hui_Guizhou': 'Guizhou',
+    'Nepali_Sherpa_Rolwaling': 'Sherpa',
+    'Chad_Daza': 'Daza',
+    'Tibetan_Shannan': 'Shannan',
+    'Madagascar_Temoro': 'Temoro',
+    'Itelmen': 'Itelmen',
+    'Rai': 'Rai',
+    'Ethiopian_Ari': 'Ari',
+    'Chipewyan': 'Chipewyan',
+    'Madagascar_Mikea': 'Mikea',
+    'Tibetan': 'Tibet',
+    'Bajo': 'Bajo',
+    'Sherpa': 'Sherpa',
+    'Cambodian': 'Cambodia',
+    'Khmer': 'Khmer',
+    'Eskimo_Sireniki': 'Sireniki',
+    'Tibetan_Shigatse': 'Shigatse',
+    'Chukchi': 'Chukotka',
+    'Tibetan_Lhasa': 'Lhasa',
+    'Yugur': 'Yugur',
+    'Eskimo_Naukan': 'Naukan',
+    'Ethiopian_Ari_blacksmith': 'Ari',
+    'Hmar': 'Hmar',
+    'Ogiek': 'Ogiek',
+    'Koryak': 'Koryak',
+    'Mizo': 'Mizo',
+    'Eskimo': 'Sireniki',
+    'Kuki': 'Kuki',
+    'Nganasan_o': 'Nganasan',
+    'Kuy_Suay': 'Kuy',
+    'Mongola': 'Mongolia',
+    'Eskimo_Chaplin': 'Chaplin',
+    'Kom': 'Kom',
+    'Tibetan_Nagqu': 'Nagqu',
+    'Indonesian_Bali': 'Bali',
+    'Daur': 'Daur',
+    'Vizayan': 'Vizayan',
+    'Tibetan_Yajiang': 'Yajiang',
+    'Tibetan_Chamdo': 'Chamdo',
+    'Masai': 'Masai',
+    'Karen_Sgaw': 'Sgaw',
+    'Qiang_Daofu': 'Daofu',
+    'Xibo': 'Xibo',
+    'Wa': 'Wa',
+    'Lawa': 'Lawa',
+    'Amerindian_North': 'North America',
+    'Blang': 'Blang',
+    'Indonesian_Java': 'Java',
+    'Tibetan_Yunnan': 'Yunnan',
+    'Yukagir': 'Yukaghir',
+    'Yukagir_Tundra': 'Tundra',
+    'Hezhen': 'Hezhen',
+    'Lao': 'Laos',
+    'Akha': 'Akha',
+    'Pumi': 'Pumi',
+    'Naxi': 'Naxi',
+    'Oroqen': 'Oroqen',
+    'Hawaiian': 'Hawaii',
+    'Htin_Mal': 'Htin Mal',
+    'Tibetan_Xinlong': 'Xinlong',
+    'Mlabri': 'Mlabri',
+    'Hani': 'Hani',
+    'Han_Shanxi': 'Shanxi',
+    'Bai': 'Bai',
+    'Yi': 'Yi',
+    'Lahu': 'Lahu',
+    'Naga': 'Naga',
+    'Baggara_Arab_Chad_B': 'Chad',
+    'Qiang_Danba': 'Danba',
+    'Manchu_Jinzhou': 'Jinzhou',
+    'Kinh_Vietnam': 'Vietnam',
+    'Sandawe': 'Sandawe',
+    'Nivkh': 'Nivkh',
+    'Han_Henan': 'Henan',
+    'Lebbo': 'Lebbo',
+    'Manchu': 'Manchu',
+    'Ulchi': 'Ulchi',
+    'Japanese': 'Japan',
+    'Tai_Lue': 'Lue',
+    'Nasoi': 'Nasoi',
+    'Manchu_Liaoning': 'Liaoning',
+    'Bolivian_Pando': 'Pando',
+    'Han_Shandong': 'Shandong',
+    'Han_Shanghai': 'Shanghai',
+    'Han_Sichuan': 'Sichuan',
+    'Dai': 'Dai',
+    'Miao': 'Miao',
+    'Nanai': 'Nanai',
+    'Luzon': 'Luzon',
+    'Han_Guizhou': 'Guizhou',
+    'Manchu_Bijie': 'Bijie',
+    'Tujia': 'Tujia',
+    'Manchu_Jinsha': 'Jinsha',
+    'Korean_Antu': 'Antu',
+    'Mongol_Bijie': 'Bijie',
+    'Miao_Songtao': 'Songtao',
+    'Gelao': 'Gelao',
+    'Korean': 'Korea',
+    'Zaghawa_Chad': 'Zaghawa',
+    'Dong_Guizhou': 'Guizhou',
+    'Han_Chongqing': 'Chongqing',
+    'Han_Hubei': 'Hubei',
+    'Han_Fujian': 'Fujian',
+    'Han_Jiangsu': 'Jiangsu',
+    'Hmong': 'Hmong',
+    'Han_Zhejiang': 'Zhejiang',
+    'Mulam': 'Mulam',
+    'Baiku_Yao_Guizhou': 'Yao',
+    'Dusun': 'Dusun',
+    'Miao_Leishan': 'Leishan',
+    'Han_Guangdong': 'Guangdong',
+    'QingYao_Guizhou': 'Yao',
+    'Dong_Hunan': 'Hunan',
+    'Changshan_Yao_Guizhou': 'Guizhou',
+    'Quechua': 'Quechua',
+    'Zhuang': 'Zhuang',
+    'Evenk': 'Evenk',
+    'She': 'She Chinese',
+    'Li': 'Li',
+    'Bolivian_Cochabamba': 'Cochabamba',
+    'Negidal': 'Negidals',
+    'Maonan': 'Maonan',
+    'Atayal': 'Atayal',
+    'Nganasan': 'Nganasan',
+    'Murut': 'Murut',
+    'Sengwer': 'Sengwer',
+    'Kikuyu': 'Kikuyu',
+    'Ami': 'Ami',
+    'Igorot': 'Igorot',
+    'Chad_Daza_o': 'Daza',
+    'Even': 'Even',
+    'Mixtec': 'Mixtec',
+    'Zapotec': 'Zapotec',
+    'Australian': 'Australia',
+    'Mayan': 'Maya',
+    'Nahua': 'Nahua',
+    'Hadza': 'Hadza',
+    'Sudan_Daju': 'Daju',
+    'Zaghawa_Sudan': 'Zaghawa',
+    'Pima': 'Pima',
+    'Cachi': 'Cachi',
+    'Huichol': 'Huichol',
+    'Bulala': 'Bulala',
+    'Colla': 'Colla',
+    'Mixe': 'Mixe',
+    'Fulani_Guinea': 'Fulani',
+    'Bolivian_LaPaz': 'La Paz',
+    'Senegal_Halpularen': 'Halpularen',
+    'Ethiopian_Gumuz': 'Gumuz',
+    'Ethiopian_Mursi': 'Mursi',
+    'Aymara': 'Aymara',
+    'Yukpa': 'Yukpa',
+    'Piapoco': 'Piapoco',
+    'Chad_Maba': 'Maba',
+    'Sudan_Nuba_Koalib': 'Koalib',
+    'Wichi': 'Wichi',
+    'Papuan_Highland_B': 'Papuan',
+    'Karitiana': 'Karitiana',
+    'Chad_Dangaleat': 'Dangaleat',
+    'Ethiopian_Anuak': 'Anuak',
+    'Surui': 'Surui',
+    'Sudanese': 'Sudanese',
+    'Dinka': 'Dinka',
+    'Mada': 'Mada',
+    'Senegal_Bedik_o': 'Bedik',
+    'Luhya_Kenya': 'Luhya',
+    'Luo': 'Luo',
+    'Bantu_Kenya': 'Bantu',
+    'Gambian': 'Gambia',
+    'Mandenka': 'Mandenka',
+    'Mwani': 'Mwani',
+    'Senegal_Bedik': 'Bedik',
+    'Laka': 'Laka',
+    'Kaba': 'Kaba',
+    'Bantu_S.W.': 'Bantu',
+    'Sena': 'Sena',
+    'Makhuwa': 'Makhuwa',
+    'Cameroon_Bakoko': 'Bakoko',
+    'Mende_Sierra_Leone': 'Sierra Leone',
+    'Ndau': 'Ndau',
+    'Nyanja': 'Nyanja',
+    'Nyaneka': 'Nyaneka',
+    'Umbundu': 'Umbundu',
+    'Yao': 'Yao',
+    'Lemande': 'Lemande',
+    'Cameroon_Bangwa': 'Bangwa',
+    'Kongo': 'Kongo',
+    'Changana': 'Changana',
+    'Tikar_South': 'Tikar',
+    'Ganguela': 'Ganguela',
+    'Cameroon_Bafut': 'Bafut',
+    'Ngumba': 'Ngumba',
+    'Cameroon_Aghem': 'Aghem',
+    'Cameroon_Mbo': 'Mbo',
+    'Ronga': 'Ronga',
+    'Tswa': 'Tswa',
+    'Manyika': 'Manyika',
+    'Chopi': 'Chopi',
+    'Bantu_S.E.': 'Bantu',
+    'Igbo': 'Igbo',
+    'Bitonga': 'Bitonga',
+    'Yoruba': 'Yoruba',
+    'Esan_Nigeria': 'Esan',
+    'Kosipe': 'Kosipe',
+    'Bedzan': 'Bedzan',
+    'Bakola': 'Bakola',
+    'Baka': 'Baka',
+    'Papuan': 'Papuan',
+    'Koinanbe': 'Koinanbe',
+    'Papuan_Highland_A': 'Papuan',
+    'Biaka': 'Biaka',
+    'Khomani_San': 'San',
+    'Ju_hoan_North': 'Ju hoan',
+    'Mbuti': 'Mbuti',
+}
+
+# Iterate through the original array
+for item in cleaned_data:
+    # Split the item by spaces
+    distance, name = item.split(' ', 1)  # Split into at most 2 parts
+    distances.append(float(distance))      # Convert distance to float
+    names.append(name)                     # Keep name as string
+
+valid_names = replace_invalid_names(names, mapping)
+
+
+# Output the results
+print("Distances:", distances.__len__())
+print("Names:", valid_names.__len__())
+
+
+

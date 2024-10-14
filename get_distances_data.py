@@ -3,7 +3,12 @@ def replace_invalid_names(invalid_names, mapping):
     for index, name in enumerate(invalid_names):
         # Get the valid name from the mapping, default to the original invalid name if not found.
         valid_name = mapping.get(name, name)
-        valid_names.append(valid_name)
+        if(isinstance(valid_name, list)):
+            for n in valid_name:
+                dist_item = next((e for e in cleaned_data if e[1] == name), None)
+                valid_names.append(n)
+                distances.append(float(dist_item[0]))
+        else: valid_names.append(valid_name)
     return valid_names
 
 data = """0.12606360	Svan
@@ -2504,8 +2509,8 @@ mapping = {
     "Syrian_Quneitra_(Mesopotamian_Arab_Profile)": "Dayr_Az_Zor",
     "Syrian_Latakia_(Mesopotamian_Arab_Profile)": "Damascus",
     "Syrian_Raqqa_(Mesopotamian_Arab_Profile)": "Al_Qunaytirah",
-    # "Cossack_Kuban": ["Krasnodarskiy Kray", "Stavropolskiy Kray"],
-    "Cossack_Kuban": "Krasnodarskiy Kray",
+    "Cossack_Kuban": ["Krasnodarskiy Kray", "Stavropolskiy Kray"],
+    # "Cossack_Kuban": "Krasnodarskiy Kray",
 }
 
 # Iterate through the original array

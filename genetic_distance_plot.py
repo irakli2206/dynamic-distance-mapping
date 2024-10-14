@@ -23,10 +23,10 @@ world['genetic_distance'] = world['name1'].map(dict(zip(genetic_data['Region'], 
 # print('All entries of names:\n', world['name0'].unique().tolist())
 
 # Filter for a specific country (e.g., Tunisia)
-country = 'Russian Federation'
+country = 'Iran (Islamic Republic of)'
 regions = world[world['name0'] == country]
 region_names = regions['name1'].unique().tolist()
-# print(f'All entries of names for {country}:\n', region_names)
+print(f'All entries of names for {country}:\n', region_names)
 
 # Check how many regions have NaN distances
 nan_count = world['genetic_distance'].isna().sum()
@@ -37,20 +37,20 @@ regions_with_distance = world.dropna(subset=['genetic_distance'])
 regions_without_distance = world[world['genetic_distance'].isna()]
 
 # Interpolate missing genetic distances using nearest neighbor
-if not regions_without_distance.empty:
-    # Get the centroids of regions with valid distances and their genetic distances
-    valid_coords = np.array(list(regions_with_distance.geometry.centroid.apply(lambda geom: (geom.x, geom.y))))
-    valid_distances = regions_with_distance['genetic_distance'].values
+# if not regions_without_distance.empty:
+#     # Get the centroids of regions with valid distances and their genetic distances
+#     valid_coords = np.array(list(regions_with_distance.geometry.centroid.apply(lambda geom: (geom.x, geom.y))))
+#     valid_distances = regions_with_distance['genetic_distance'].values
     
-    # Build a KDTree for fast nearest-neighbor lookup
-    kdtree = cKDTree(valid_coords)
+#     # Build a KDTree for fast nearest-neighbor lookup
+#     kdtree = cKDTree(valid_coords)
     
-    # Find nearest neighbors for regions with missing distances
-    missing_coords = np.array(list(regions_without_distance.geometry.centroid.apply(lambda geom: (geom.x, geom.y))))
-    _, nearest_indices = kdtree.query(missing_coords)
+#     # Find nearest neighbors for regions with missing distances
+#     missing_coords = np.array(list(regions_without_distance.geometry.centroid.apply(lambda geom: (geom.x, geom.y))))
+#     _, nearest_indices = kdtree.query(missing_coords)
     
-    # Assign the nearest genetic distance to the missing regions
-    world.loc[world['genetic_distance'].isna(), 'genetic_distance'] = valid_distances[nearest_indices]
+#     # Assign the nearest genetic distance to the missing regions
+#     world.loc[world['genetic_distance'].isna(), 'genetic_distance'] = valid_distances[nearest_indices]
 
 # Check the updated NaN count
 nan_count_after = world['genetic_distance'].isna().sum()

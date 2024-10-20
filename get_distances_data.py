@@ -2246,7 +2246,7 @@ mapping = {
     "Polish_Upper_Silesia": "Opolskie",
     "Polish_Warmia-Masuria": "Warminsko-Mazurskie",
     "Polish_Wielkopolska": "Wielkopolskie",
-      "Swiss_German": "Switzerland",  # No exact match, used a plausible geographic region
+    "Swiss_German": "Switzerland",  # No exact match, used a plausible geographic region
     "German_Baden-Wurttemberg": "Baden-Wuerttemberg",
     "German_Bavaria": "Bayern",
     # "German_Bavaria_Lower_Bavaria": "Bayern",
@@ -2343,6 +2343,7 @@ mapping = {
     "French_Oïl_Pays_de_la_Loire_Maine-et-Loire": "Pays-de-la-Loire",
     "French_Oïl_Pays_de_la_Loire_Sarthe": "Pays-de-la-Loire",
     "French_Oïl_Pays_de_la_Loire_Vendee": "Pays-de-la-Loire",
+    "Corsican": "Corse",
     "Alsatian_Bas-Rhin": "Alsace",
     "Alsatian_Haut-Rhin": "Alsace",
         "Spanish_Andalusia_(Andalusian)": "Andalucía",
@@ -2524,6 +2525,10 @@ mapping = {
     "Russian_Tver": "Tverskaya Oblast",
     "Russian_Voronez": "Voronezhskaya Oblast",
     "Russian_Yaroslavl": "Yaroslavskaya Oblast",
+    "Udmurt": "Udmurtiya Rep.",
+    "Mordvin": "Mordoviya Rep.",
+    "Tatar": 'Tatarstan Rep.',
+    "Yakut": "Sakha Rep.",
     "Chechen": "Chechnya Rep.",
     "Avar": "Dagestan Rep.",
     "North_Ossetian": "Severnaya Osetiya-alaniya Rep.",

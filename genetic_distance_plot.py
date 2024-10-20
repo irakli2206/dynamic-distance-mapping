@@ -20,10 +20,10 @@ genetic_data = {
 world['genetic_distance'] = world['name1'].map(dict(zip(genetic_data['Region'], genetic_data['Distance'])))
 
 # Print the first few entries of genetic_distance
-# print('All entries of names:\n', world['name0'].unique().tolist())
+print('All entries of names:\n', world['name0'].unique().tolist())
 
 # Filter for a specific country (e.g., Tunisia)
-country = 'Iran (Islamic Republic of)'
+country = 'Azerbaijan'
 regions = world[world['name0'] == country]
 region_names = regions['name1'].unique().tolist()
 print(f'All entries of names for {country}:\n', region_names)

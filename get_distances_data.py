@@ -13,6 +13,7 @@ def replace_invalid_names(invalid_names, mapping):
 
 data = """0.02362933	German_Bavaria_Swabia
 0.02399295	Sudtirol
+0.02428128	US_New-York-City
 0.02461283	Bosniak_Krajina_West
 0.02467679	Italian_Alto-Adige_(Bavarian)
 0.02485713	Croat_Istria
@@ -39,12 +40,14 @@ data = """0.02362933	German_Bavaria_Swabia
 0.02829722	Austrian
 0.02854922	German_Bavaria_Lower_Franconia
 0.02876922	Montenegrin
+0.02898742	US_New-York
 0.02911342	Serb_Herzegovina
 0.02930785	Moldovan_North
 0.02954412	German_Hesse
 0.02957617	Austrian_Burgenland
 0.02958032	Austrian_Styria
 0.02963654	Romanian_Crisana
+0.02968536	US_Philadelphia
 0.02978546	German_Upper_Swabia
 0.03001398	Italian_Friuli_Sauris_(Bavarian)
 0.03004398	Bosniak_Southeast
@@ -86,6 +89,7 @@ data = """0.02362933	German_Bavaria_Swabia
 0.03264168	Croat_Bosnia
 0.03276080	Serb
 0.03278959	Romanian_Transylvania
+0.03291383	Pennsylvania_Dutch
 0.03292976	Serb_Bosnia
 0.03302366	Alsatian_Haut-Rhin
 0.03325029	Bosniak
@@ -94,11 +98,14 @@ data = """0.02362933	German_Bavaria_Swabia
 0.03335836	Serb_Serbia_Nisava
 0.03340710	French_Occitan_Auvergne-Rhone-Alpes_Drome
 0.03351132	Hungarian_Csango
+0.03371698	US_Cajun
+0.03389379	French-Canadian
 0.03400709	Walloon
 0.03401814	Croat_Dalmatia
 0.03405293	Serb_Serbia_Sumadija
 0.03413425	Swiss_French
 0.03417522	Slovene
+0.03421735	US_Louisiana
 0.03424966	French_Occitan_Auvergne-Rhone-Alpes_Ardeche
 0.03429553	Bosniak_Croatia
 0.03434020	Hungarian_Transylvania
@@ -106,6 +113,7 @@ data = """0.02362933	German_Bavaria_Swabia
 0.03438386	Romanian_Banat
 0.03442938	Croat_Central
 0.03449396	Bulgarian_Northwestern
+0.03459019	Canada_Quebec
 0.03481815	Romanian_Dobruja
 0.03484533	French_Occitan_Occitanie_Haute-Garonne
 0.03509774	Romanian_South
@@ -115,18 +123,23 @@ data = """0.02362933	German_Bavaria_Swabia
 0.03538956	French_Oïl_Bourgogne-Franche-Comte_Haute-Saone
 0.03540033	Vlach_Serbia
 0.03548555	French_Oïl_Pays_de_la_Loire_Vendee
+0.03553676	US_Chicago
 0.03571243	French_Arpitan_Auvergne-Rhone-Alpes_Isere
 0.03571710	German_Bavaria_Middle_Franconia_Erlangen_o2
 0.03576587	Hungarian
 0.03580317	Italian_Trentino
 0.03584401	French_Arpitan_Auvergne-Rhone-Alpes_Savoie
 0.03586794	French_Arpitan_Auvergne-Rhone-Alpes_Rhone
+0.03603082	US_New-Jersey
 0.03605358	Romanian_Ukraine
 0.03613068	German_North_Moravia
 0.03619487	German
 0.03641779	Vlach_Aromanian_Greece_o
 0.03650758	French_Oïl_Bourgogne-Franche-Comte_Saone-et-Loire
+0.03651632	US_California
 0.03651725	Austrian_Carinthia
+0.03667644	Afrikaner
+0.03669108	US_Northeast
 0.03678086	Italian_Aosta_Valley_(Valdotain)
 0.03682460	Bulgarian_Southwestern
 0.03687799	French_Oïl_Hauts-de-France_Nord_o2_(Central_European_Profile)
@@ -149,6 +162,7 @@ data = """0.02362933	German_Bavaria_Swabia
 0.03822212	Dutch_Zeeland
 0.03826990	Romanian_Oltenia
 0.03828036	French_Occitan_Provence-Alpes-Cote_d'Azur_Bouches-du-Rhone
+0.03828295	US_Connecticut
 0.03836442	French_Oïl_Nouvelle-Aquitaine_Charente-Maritime
 0.03839825	French_Oïl_Hauts-de-France_Somme
 0.03840739	Flemish_Belgium
@@ -165,13 +179,17 @@ data = """0.02362933	German_Bavaria_Swabia
 0.03920220	Polish_Mazovia
 0.03924598	Italian_Piedmont_Verbania_(Lombard)
 0.03937450	German_Saxony_Erzgebirgskreis
+0.03981426	US_Ohio
+0.03982152	Canada_New-Brunswick
 0.03983061	French_Oïl_Normandy_Calvados
 0.03985958	Flemish_Belgium_Antwerp
 0.03988088	Italian_Veneto_(Venetian)
+0.03988566	US_Michigan
 0.03998533	German_Saxony
 0.04010278	French_Oïl_Bourgogne-Franche-Comte_Nievre
 0.04012235	French_Oïl_Bourgogne-Franche-Comte_Cote-d'Or
 0.04017048	French_Oïl_Grand_Est_Vosges
+0.04023214	US_Massachussets
 0.04030442	Bulgarian_Central
 0.04031653	Bulgarian_North_Central
 0.04038932	Serb_Serbia_Moravica
@@ -180,21 +198,25 @@ data = """0.02362933	German_Bavaria_Swabia
 0.04044155	Moldovan_o2
 0.04066055	Breton_Loire-Atlantique
 0.04078348	Moldovan_Stefan_Voda
+0.04090765	US_Pennsylvania
 0.04091681	Dutch_South
 0.04094511	Serb_Serbia_Kolubara
 0.04100362	Croat_North
 0.04109030	French_Occitan_Nouvelle-Aquitaine_Gironde
 0.04117202	French_Oïl_Normandy_Seine-Maritime
 0.04125908	Italian_(Northeast_Italian_Profile)
+0.04131654	US_New-England
 0.04132691	Croat_Northwest
 0.04145325	French_Occitan_Occitanie_Lozere
 0.04145717	French_Occitan_Auvergne-Rhone-Alpes_Haute-Loire
 0.04152683	Polish_Podlaskie
 0.04172726	French_Occitan_Occitanie_Herault
+0.04178641	US_West
 0.04183026	French_Oïl_Centre-Val_de_Loire_Indre
 0.04185544	Pomak_Greece
 0.04188391	Spanish_Baleares_Mallorca_(Catalan)
 0.04189021	German_Bavaria_Middle_Franconia
+0.04194111	US_Illinois
 0.04195123	German_Thuringia
 0.04195873	French_Oïl_Normandy_Orne
 0.04208289	French_Occitan_Nouvelle-Aquitaine_Haute-Vienne
@@ -205,44 +227,69 @@ data = """0.02362933	German_Bavaria_Swabia
 0.04294263	Bulgarian_South_Central
 0.04306175	French_Oïl_Grand_Est_Ardennes
 0.04309003	Bulgarian_Northeastern
+0.04320358	US_Kansas
 0.04332303	Spanish_Catalonia_Camp_de_Tarragona_(Catalan)
+0.04335037	US_Florida
 0.04342711	German_Saxony_Leipzig
+0.04346695	US_Midwest
 0.04364686	Spanish_Catalonia_Barcelones_(Catalan)
 0.04366765	Macedonian_North_Macedonia
 0.04369466	French_Occitan_Provence-Alpes-Cote_d'Azur_Alpes-de-Haute-Provence
+0.04384347	US_West-Virginia
+0.04386637	US_Missouri
 0.04388765	French_Oïl_Normandy_Eure
+0.04389990	US_South-Carolina
+0.04392786	US_North-Carolina
+0.04394369	US_Virginia
 0.04394999	German_Lower_Silesia
 0.04403159	Bulgarian_Western
+0.04411756	US_Texas
 0.04419043	German_Saxony-Anhalt
 0.04439110	Bulgarian_Eastern
+0.04440038	US_Maine
+0.04458155	US_South
 0.04460371	Turkish_North_Macedonia
 0.04465725	Spanish_Catalonia_Girona_(Catalan)
 0.04479894	Breton_Ille-et-Vilaine_Rennes
 0.04483743	Croat_Gorski_Kotar
+0.04484685	US_Tennessee
 0.04485544	Macedonian_Greece_Florina
 0.04485692	Czech
 0.04486637	Dutch_North_Brabant
 0.04508767	French_Occitan_Nouvelle-Aquitaine_Creuse
 0.04510476	Spanish_Catalonia_Central_(Catalan)
+0.04514901	US_Indiana
+0.04521329	US_Nebraska
 0.04527129	Bulgarian_Moldova
+0.04561285	US_Kentucky
 0.04565557	Gagauz
 0.04580055	German_Hamburg
+0.04617521	US_Maryland
 0.04620173	Spanish_Catalonia_Peri-Barcelona_(Catalan)
 0.04636530	Spanish_Baleares_(Catalan)
+0.04648443	Canada_Nova-Scotia
 0.04661531	Dutch_Central+South
 0.04691677	English_East_Midlands
+0.04692462	Canada_Ontario
+0.04694857	US_Georgia
 0.04703943	Polish_Subcarpathia
+0.04710645	US_Alabama
 0.04714050	Italian_Friuli_o
 0.04717838	Spanish_Catalonia_Lleida_(Catalan)
 0.04720621	Italian_Piedmont_(Piedmontese)
+0.04727837	US_Mississippi
 0.04733489	Breton_Morbihan
 0.04734237	Croat_Kajkavian
+0.04738240	Australia_Victoria
 0.04740584	Belgian_(Flemish_Profile)
+0.04742152	US_Iowa
 0.04743546	French_(Breton/Norman_Profile)
+0.04765176	Australia_Tasmania
 0.04766638	French_Occitan_Nouvelle-Aquitaine_Dordogne
 0.04770651	Spanish_Baleares_Menorca_(Catalan)
 0.04770655	French_Oïl_Nouvelle-Aquitaine_Deux-Sevres
 0.04778344	German_Mennonite_Russia
+0.04778928	Canada_Newfoundland
 0.04781247	English_West_Country
 0.04787302	Dutch
 0.04795682	Bulgarian_Southeastern
@@ -252,15 +299,21 @@ data = """0.02362933	German_Bavaria_Swabia
 0.04819330	French_Occitan_Occitanie_Tarn
 0.04822829	Italian_Trentino_(Trentino_or_Ladin)
 0.04828249	Dutch_South_Holland
+0.04832342	US_Oklahoma
 0.04863894	Welsh
+0.04873274	New_Zealand
+0.04881696	Australia_Colonial
 0.04887025	English_Southwest
 0.04889745	Swiss_Italian
 0.04896615	Spanish_Catalonia_(Catalan)
 0.04910192	English_Southeast
+0.04920350	Australia_New-South-Wales
 0.04927981	Italian_Piedmont_Domodossola_(Lombard)
 0.04929368	English_Yorkshire
 0.04930704	Pomak_North_Macedonia_(Torbesh)
+0.04936509	US_Arkansas
 0.04936993	Breton_Finistere
+0.04937989	US_Utah
 0.04947287	Greek_Western_Macedonia
 0.04975296	Vlach_Aromanian
 0.04983129	Frisian_Netherlands_o
@@ -268,7 +321,11 @@ data = """0.02362933	German_Bavaria_Swabia
 0.05023152	Cornish
 0.05023477	Spanish_Catalonia_Pirineu_(Catalan)
 0.05030131	Ukrainian_Zakarpattia
+0.05033876	Australia_South-Australia
+0.05046832	US_Wisconsin
 0.05053226	Greek_Macedonia
+0.05054965	Australia_Queensland
+0.05062066	Canada_West
 0.05066237	Italian_Trentino_(Trentino_or_Venetian)
 0.05075217	Dutch_Central
 0.05078643	Dutch_Gelderland
@@ -312,6 +369,7 @@ data = """0.02362933	German_Bavaria_Swabia
 0.05415697	Portuguese
 0.05417558	French_Oïl_Hauts-de-France_Nord_o1_(Flemish_Profile)
 0.05419935	Spanish_Murcia_(Murcian)
+0.05424999	US_Minnesota
 0.05432591	German_Schleswig-Holstein
 0.05445852	Polish_Silesia
 0.05449586	Scottish
@@ -2092,7 +2150,9 @@ data = """0.02362933	German_Bavaria_Swabia
 0.74826788	Bambara_Mali
 0.74827622	Xhosa
 0.74886888	Zulu_(low_res)_o
+0.74936605	!Kung_(low_res)_o2_(Bantu_Profile)
 0.75111716	Kaba
+0.75140187	!Kung_(low_res)_o1_(Strongly_Bantu-Mixed_Profile)
 0.75195810	Herero_Namibia
 0.75331972	Sena
 0.75336991	Makhuwa
@@ -2155,11 +2215,13 @@ data = """0.02362933	German_Bavaria_Swabia
 0.80593450	Papuan
 0.80618718	Koinanbe
 0.80720753	Xun
+0.81635541	!Kung_(low_res)
 0.82008249	Biaka
 0.85832260	Khomani_San
 0.86823901	Ju/'hoansi
 0.87546482	Mbuti_(low_res)
-0.94477773	Mbuti"""
+0.94477773	Mbuti
+"""
 
 # Step 1: Split the data by new lines
 data_array = data.strip().split("\n")
@@ -2489,7 +2551,7 @@ mapping = {
     "Georgian_Imeretian": "Imereti",
     "Georgian_Javakhian": "Samtskhe-Javakheti",
     # "Georgian_Kakhetian": "Kakheti",
-    "Georgian_Kartlian": "Shida Kartli",
+    "Georgian_Kartlian": ["Shida Kartli", "Kvemo Kartli"],
     "Georgian_Khevsurian": "Kakheti",
     "Georgian_Lechkhumian": "Racha-Lechkhumi and Kvemo (lower) Svaneti",
     "Mingrelian": "Samergelo and Zemo (upper) Svaneti",
@@ -2502,9 +2564,11 @@ mapping = {
     "Iranian_(Mazandarani_Profile)": ["Gilan", "Mazandaran"],
     "Iranian_(Azeri_Profile)": ["West Azarbayejan", "East Azarbayejan", "Ardebil", "Zanjan"],
     "Iranian_(Western_Plateau_Profile)": ["Hamedan", "Ghazvin", "Markazi"],
-    "Azeri_Azerbaijan": ["Absheron", "Ganja-Qazakh"],
-        "Greek_Cyprus": "Cyprus",
-     "Greek_Attica": "Attiki",
+    "Azeri_Azerbaijan": ['Absheron', 'Aran', 'Daghlig Shirvan', 'Ganja-Gazakh', 'Lankaran', 'Nakhchivan',  'Yukhari Garabakh', 'Kalbajar-Lachin'],
+    "Azeri_Azerbaijan_Shaki": "Shaki-Zaqatala",
+    "Lezgin": "Guba-Khachmaz",
+    "Greek_Cyprus": "Cyprus",
+    "Greek_Attica": "Attiki",
     "Greek_Azov": "Dytiki Ellada",
     "Greek_Central_Greece": "Sterea Ellada",
     "Greek_Central_Greece_Boeotia": "Sterea Ellada",
@@ -2570,15 +2634,15 @@ mapping = {
     "Greek_Western_Greece_AetoliaAcarnania": "Dytiki Ellada",
     "Greek_Western_Macedonia": "Dytiki Makedonia",
     # "Greek_Western_Macedonia_Vallahas_(Patriyot)": "Dytiki Makedonia",
-       "Turkish_(Azeri_Profile)": "Igdir",
-    "Turkish_(Central_Anatolian_Turk_Profile)": "Kirsehir",
-    "Turkish_(East_Anatolian_Turk_Profile)": "Erzurum",
-    "Turkish_(EastCentral_Anatolian_Turk_Profile)": "Elazig",
-    "Turkish_(Kurdish_Profile)": "Diyarbakir",
-    "Turkish_(Pontic_Profile)": "Trabzon",
-    "Turkish_(South/Central_Anatolian_Turk_Profile)": "Konya",
-    "Turkish_(West_Anatolian_Turk_Profile)": "Izmir",
-    "Turkish_(West/Central_Anatolian_Turk_Profile)": "Ankara",
+    #    "Turkish_(Azeri_Profile)": "Igdir",
+    # "Turkish_(Central_Anatolian_Turk_Profile)": "Kirsehir",
+    # "Turkish_(East_Anatolian_Turk_Profile)": "Erzurum",
+    # "Turkish_(EastCentral_Anatolian_Turk_Profile)": "Elazig",
+    # "Turkish_(Kurdish_Profile)": "Diyarbakir",
+    # "Turkish_(Pontic_Profile)": "Trabzon",
+    # "Turkish_(South/Central_Anatolian_Turk_Profile)": "Konya",
+    # "Turkish_(West_Anatolian_Turk_Profile)": "Izmir",
+    # "Turkish_(West/Central_Anatolian_Turk_Profile)": "Ankara",
     "Turkish_Adana": "Adana",
     "Turkish_Afyonkarahisar": "Afyon",
     "Turkish_Aksaray": "Aksaray",
@@ -2593,7 +2657,7 @@ mapping = {
     "Turkish_Cankiri": "Cankiri",
     "Turkish_Corum": "Corum",
     "Turkish_Denizli": "Denizli",
-    "Turkish_Elazig": "Elazig",
+    # "Turkish_Elazig": "Elazig",
     "Turkish_Erzincan": "Erzincan",
     "Turkish_Erzurum": "Erzurum",
     "Turkish_Eskisehir": "Eskisehir",
@@ -2626,6 +2690,8 @@ mapping = {
     "Turkish_Trabzon": "Trabzon",
     "Turkish_Usak": "Usak",
     "Turkish_Zonguldak": "Zonguldak",
+    "Turkish_Meskheti": "Artvin",
+    "Assyrian_Turkey": "Mardin",
     "Tunisian": "Tunis",
        "Moroccan": "Tanger - Tétouan",
     "Moroccan_Casablanca": "Grand Casablanca",
@@ -2642,7 +2708,32 @@ mapping = {
     "Moroccan_Ouarzazate_Intermediate_Profile": "Chaouia - Ouardigha",
     "Moroccan_Oujda": "Doukkala - Abda",
     "Moroccan_Zagora": "Taza - Al Hoceima - Taounate",
-    "Cossack_Kuban": ["Stavropolskiy Kray", "Krasnodarskiy Kray"]
+    "Cossack_Kuban": ["Stavropolskiy Kray", "Krasnodarskiy Kray"],
+    "Azerbaijani_Iran_EastAz": "East Azarbayejan",
+    "Azerbaijani_Iran_WestAz_Maku": "West Azerbayejan",
+    "Iranian_Cosmopolitan_Tehran": "Tehran",
+    "Azerbaijani_Iran_Ardabil": "Ardebil",
+    "Iranian_Persian_Fars": "Fars",
+    "Iranian_Persian_Yazd": "Yazd",
+    "Iranian_Persian_Khorasan": "Khorasan",
+    "Iranian_Arab_Khuzestan": "Khuzestan",
+    "Iranian_Mazandarani": "Mazandaran",
+    "Iranian_Lor_Khorramabad": "Lorestan",
+    "Kurdish_Iran_Kermanshah": "Kermanshah",
+    "Kurdish_Kurmanji_Turkey": ["Van", "Bitlis", "Diyarbakir" ],
+    "Kurdish_Iran_Kordestan": "Kurdistan",
+    "Kurdish_Syria": "Hassakeh",
+    "Kurd_Zaza_Turkey": "Elazig",
+    "Iranian_Bandari": "Hormozgan",
+    "Syrian_Aleppo_(Levantine_Profile)": "Aleppo",
+    "Syrian_Homs_(Syrio-Mesopotamian_Profile)": "Homs",
+    "Syrian_Hama": "Hama",
+    "Syrian_Raqqa_(Mesopotamian_Arab_Profile)": "Raqqa",
+    "Syrian_Daraa_(Levantine_Profile)":"Dara",
+    "Syrian_Deir_ez-Zor_(Syrio-Mesopotamian_Arab_Profile)": "Dayr_Az_Zor",
+    "Syrian_Idlib_(Levantine_Profile)": "Idlib",
+    "Syrian_Damascus_(Levantine_Profile)": "Damascus"
+    
 }
 
 # Iterate through the original array
